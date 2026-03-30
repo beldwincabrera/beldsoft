@@ -1,0 +1,59 @@
+@page "/projects/{Slug}"
+@layout Layout.MainLayout
+@inject IProjectService ProjectSvc
+
+<PageTitle>@(_project?.Title ?? "Project") - Beldsoft</PageTitle>
+
+@if (_project is null)
+{
+    <PageTitleBanner Title="Project"
+        Breadcrumbs="@(new[] { new Shared.PageTitleBanner.BreadcrumbItem("Home","/"), new Shared.PageTitleBanner.BreadcrumbItem("Projects","/projects") })" />
+    <section class="section"><div class="auto-container"><p>Project not found.</p></div></section>
+}
+else
+{
+    <PageTitleBanner Title="@_project.Title"
+        Breadcrumbs="@(new[] { new Shared.PageTitleBanner.BreadcrumbItem("Home","/"), new Shared.PageTitleBanner.BreadcrumbItem("Projects","/projects"), new Shared.PageTitleBanner.BreadcrumbItem(_project.Title,null) })" />
+
+    <section class="project-detail section">
+        <div class="auto-container">
+            <div class="row clearfix">
+                <div class="col-lg-8 col-md-12">
+                    <div class="project-detail_image">
+                        <img src="/@_project.Image" alt="@_project.Title" />
+                    </div>
+                    <h2>@_project.Title</h2>
+                    <p>@_project.Description</p>
+                    @if (_project.Technologies.Any())
+                    {
+                        <div class="technologies">
+                            <h5>Technologies Used</h5>
+                            @foreach (var tech in _project.Technologies)
+                            {
+                                <span class="tech-tag">@tech</span>
+                            }
+                        </div>
+                    }
+                </div>
+                <div class="col-lg-4 col-md-12">
+                    <div class="project-info-widget">
+                        <h4>Project Info</h4>
+                        <ul>
+                            <li><strong>Client:</strong> @_project.Client</li>
+                            <li><strong>Category:</strong> @_project.Category</li>
+                            <li><strong>Completed:</strong> @_project.CompletedAt.ToString("MMMM yyyy")</li>
+                        </ul>
+                        <a href="/contact" class="theme-btn btn-style-one"><span class="btn-title">Start Similar Project</span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
+@code {
+    [Parameter] public string Slug { get; set; } = string.Empty;
+    private ProjectDto? _project;
+    protected override async Task OnInitializedAsync() =>
+        _project = await ProjectSvc.GetProjectBySlugAsync(Slug);
+}

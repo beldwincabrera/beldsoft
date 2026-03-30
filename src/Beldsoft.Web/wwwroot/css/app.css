@@ -1,0 +1,39 @@
+/* Beldsoft — MudBlazor override layer
+   Loaded after all template CSS, before component-scoped styles */
+
+/* Reset MudBlazor body margin that conflicts with template */
+body {
+    margin: 0 !important;
+    padding: 0 !important;
+    font-family: 'Manrope', sans-serif !important;
+}
+
+/* MudBlazor input border-radius reset to match template forms */
+.mud-input-root { border-radius: 0 !important; }
+.mud-button-root.mud-button { border-radius: 0 !important; }
+
+/* MudBlazor expansion panel (FAQ) — transparent background */
+.mud-expand-panel { background: transparent !important; }
+
+/* btn-title: simple display alias so buttons render even without btn-wrap animation */
+.btn-title {
+    position: relative;
+    display: block;
+    color: var(--white-color, #fff);
+    z-index: 1;
+}
+
+/* Error UI */
+#blazor-error-ui {
+    background: #ff3b30;
+    color: white;
+    padding: 12px 20px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 99999;
+    display: none;
+    text-align: center;
+}
+#blazor-error-ui a { color: white; text-decoration: underline; }
+#blazor-error-ui .dismiss { cursor: pointer; float: right; }

@@ -1,0 +1,29 @@
+@page "/projects"
+@layout Layout.MainLayout
+@inject IProjectService ProjectSvc
+
+<PageTitle>Our Projects - Beldsoft</PageTitle>
+
+<PageTitleBanner Title="Our Projects"
+    Breadcrumbs="@(new[] { new Shared.PageTitleBanner.BreadcrumbItem("Home","/"), new Shared.PageTitleBanner.BreadcrumbItem("Projects",null) })" />
+
+<section class="projects-page section">
+    <div class="auto-container">
+        <div class="row clearfix">
+            @foreach (var proj in _projects)
+            {
+                <div class="col-lg-4 col-md-6">
+                    <ProjectCard Project="proj" />
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<CtaSection />
+
+@code {
+    private IEnumerable<ProjectDto> _projects = [];
+    protected override async Task OnInitializedAsync() =>
+        _projects = await ProjectSvc.GetProjectsAsync();
+}

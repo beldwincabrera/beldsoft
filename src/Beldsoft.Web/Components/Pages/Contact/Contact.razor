@@ -1,0 +1,81 @@
+@page "/contact"
+@layout Layout.MainLayout
+@inject IContactService ContactSvc
+@inject ISnackbar Snackbar
+
+<PageTitle>Contact Us - Beldsoft</PageTitle>
+
+<PageTitleBanner Title="Contact Us"
+    Breadcrumbs="@(new[] { new Shared.PageTitleBanner.BreadcrumbItem("Home","/"), new Shared.PageTitleBanner.BreadcrumbItem("Contact",null) })" />
+
+<section class="contact-section section">
+    <div class="auto-container">
+        <div class="row clearfix">
+            <div class="col-lg-5 col-md-12">
+                <div class="contact-info-boxes">
+                    <div class="contact-info-box">
+                        <span class="icon fa-solid fa-location-dot"></span>
+                        <h5>Our Location</h5>
+                        <p>24 Street, New York, USA</p>
+                    </div>
+                    <div class="contact-info-box">
+                        <span class="icon fa-solid fa-phone"></span>
+                        <h5>Phone Number</h5>
+                        <a href="tel:+15551002000">+1 (555) 100-2000</a>
+                    </div>
+                    <div class="contact-info-box">
+                        <span class="icon fa-solid fa-envelope"></span>
+                        <h5>Email Address</h5>
+                        <a href="mailto:hello@beldsoft.com">hello@beldsoft.com</a>
+                    </div>
+                    <div class="contact-info-box">
+                        <span class="icon fa-solid fa-clock"></span>
+                        <h5>Office Hours</h5>
+                        <p>Mon–Fri: 9am–6pm<br />Sat: 10am–4pm</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7 col-md-12">
+                <div class="contact-form-box">
+                    <SectionTitle Tag="Get in Touch" Title="Send Us a Message" />
+                    <EditForm Model="_form" OnValidSubmit="Submit">
+                        <DataAnnotationsValidator />
+                        <div class="row clearfix">
+                            <div class="col-md-6">
+                                <MudTextField @bind-Value="_form.Name" Label="Your Name" Variant="Variant.Outlined" Required="true" Class="mb-3" />
+                            </div>
+                            <div class="col-md-6">
+                                <MudTextField @bind-Value="_form.Email" Label="Email Address" Variant="Variant.Outlined" Required="true" Class="mb-3" />
+                            </div>
+                            <div class="col-md-6">
+                                <MudTextField @bind-Value="_form.Phone" Label="Phone Number" Variant="Variant.Outlined" Class="mb-3" />
+                            </div>
+                            <div class="col-md-6">
+                                <MudTextField @bind-Value="_form.Subject" Label="Subject" Variant="Variant.Outlined" Class="mb-3" />
+                            </div>
+                            <div class="col-12">
+                                <MudTextField @bind-Value="_form.Message" Label="Your Message" Variant="Variant.Outlined" Lines="5" Required="true" Class="mb-3" />
+                            </div>
+                            <div class="col-12">
+                                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large">
+                                    Send Message
+                                </MudButton>
+                            </div>
+                        </div>
+                    </EditForm>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@code {
+    private ContactFormDto _form = new();
+
+    private async Task Submit()
+    {
+        await ContactSvc.SubmitMessageAsync(_form);
+        Snackbar.Add("Message sent! We'll get back to you soon.", Severity.Success);
+        _form = new();
+    }
+}

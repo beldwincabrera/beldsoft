@@ -1,0 +1,28 @@
+<div class="price-block_one @(Plan.IsHighlighted ? "active" : "")">
+    <div class="price-block_one-inner">
+        <div class="price-block_one-icon">
+            <img src="/assets/@Plan.IconPath" alt="@Plan.Name" />
+        </div>
+        <div class="price-block_one-name">@Plan.Name</div>
+        <div class="price-block_one-subtitle">@Plan.Subtitle</div>
+        <div class="price-block_one-price">
+            <span class="currency">$</span>
+            <span class="amount">@(IsYearly ? Plan.YearlyPrice : Plan.MonthlyPrice)</span>
+            <span class="period">/ @(IsYearly ? "yr" : "mo")</span>
+        </div>
+        <ul class="price-block_one-features">
+            @foreach (var feature in Plan.Features)
+            {
+                <li><span class="fa-solid fa-check"></span> @feature</li>
+            }
+        </ul>
+        <a href="/contact" class="theme-btn btn-style-one">
+            <span class="btn-title">Get Started</span>
+        </a>
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public PricingPlanDto Plan { get; set; } = null!;
+    [Parameter] public bool IsYearly { get; set; }
+}

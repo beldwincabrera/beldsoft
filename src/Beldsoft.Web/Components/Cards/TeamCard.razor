@@ -1,0 +1,23 @@
+<div class="team-block_one">
+    <div class="team-block_one-image">
+        <img src="/assets/@Member.Photo" alt="@Member.Name" />
+        <ul class="team-block_one-social">
+            @if (Member.Socials?.Facebook is not null)
+            { <li><a href="@Member.Socials.Facebook" class="fa-brands fa-facebook-f"></a></li> }
+            @if (Member.Socials?.Instagram is not null)
+            { <li><a href="@Member.Socials.Instagram" class="fa-brands fa-instagram"></a></li> }
+            @if (Member.Socials?.Twitter is not null)
+            { <li><a href="@Member.Socials.Twitter" class="fa-brands fa-x-twitter"></a></li> }
+            @if (Member.Socials?.LinkedIn is not null)
+            { <li><a href="@Member.Socials.LinkedIn" class="fa-brands fa-linkedin-in"></a></li> }
+        </ul>
+    </div>
+    <div class="team-block_one-content">
+        <h5 class="team-block_one-title"><a href="/team/@Member.Slug">@Member.Name</a></h5>
+        <div class="team-block_one-designation">@Member.Title</div>
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public TeamMemberDto Member { get; set; } = null!;
+}

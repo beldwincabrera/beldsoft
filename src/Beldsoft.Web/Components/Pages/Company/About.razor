@@ -1,0 +1,13 @@
+@page "/about"
+@layout Layout.MainLayout
+
+<PageTitle>About Us - Beldsoft</PageTitle>
+
+<PageTitleBanner Title="About Us"
+    Breadcrumbs="@(new[] { new Shared.PageTitleBanner.BreadcrumbItem("Home","/"), new Shared.PageTitleBanner.BreadcrumbItem("About",null) })" />
+
+<AboutSection />
+<ServicesSection />
+<TeamSection />
+<TestimonialsSection />
+<CtaSection />

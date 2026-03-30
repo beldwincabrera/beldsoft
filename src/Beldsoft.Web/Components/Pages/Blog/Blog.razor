@@ -1,0 +1,46 @@
+@page "/blog"
+@layout Layout.MainLayout
+@inject IBlogService BlogSvc
+
+<PageTitle>Blog - Beldsoft</PageTitle>
+
+<PageTitleBanner Title="Our Blog"
+    Breadcrumbs="@(new[] { new Shared.PageTitleBanner.BreadcrumbItem("Home","/"), new Shared.PageTitleBanner.BreadcrumbItem("Blog",null) })" />
+
+<section class="blog-page section">
+    <div class="auto-container">
+        <div class="row clearfix">
+            <div class="col-lg-8 col-md-12">
+                <div class="row clearfix">
+                    @foreach (var post in _posts)
+                    {
+                        <div class="col-lg-6 col-md-6">
+                            <BlogCard Post="post" />
+                        </div>
+                    }
+                </div>
+                <div class="d-flex justify-content-center mt-4">
+                    <MudPagination Count="@_totalPages" @bind-Selected="_page" Color="Color.Primary" />
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-12">
+                <BlogSidebar />
+            </div>
+        </div>
+    </div>
+</section>
+
+@code {
+    private IEnumerable<BlogPostSummaryDto> _posts = [];
+    private int _page = 1;
+    private int _totalPages = 1;
+
+    protected override async Task OnInitializedAsync() => await LoadPosts();
+
+    private async Task LoadPosts()
+    {
+        _posts = await BlogSvc.GetPostsAsync(_page, 6);
+        var total = await BlogSvc.GetTotalCountAsync();
+        _totalPages = (int)Math.Ceiling(total / 6.0);
+    }
+}

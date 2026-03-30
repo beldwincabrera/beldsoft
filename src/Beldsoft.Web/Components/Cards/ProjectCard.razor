@@ -1,0 +1,20 @@
+<div class="gallery-block_one">
+    <div class="gallery-block_one-image">
+        <img src="/assets/@Project.Image" alt="@Project.Title" />
+        <div class="gallery-block_one-overlay">
+            <div class="gallery-block_one-content">
+                <div class="gallery-block_one-category">@Project.Category</div>
+                <h5 class="gallery-block_one-title">
+                    <a href="/projects/@Project.Slug">@Project.Title</a>
+                </h5>
+                <a href="/projects/@Project.Slug" class="gallery-block_one-btn">
+                    <span class="fa-solid fa-arrow-right"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public ProjectDto Project { get; set; } = null!;
+}

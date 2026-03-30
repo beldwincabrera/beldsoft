@@ -1,0 +1,67 @@
+## .NET / C# ##
+bin/
+obj/
+*.user
+*.suo
+.vs/
+.vscode/
+*.swp
+*.DS_Store
+
+## Build outputs ##
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+## NuGet ##
+*.nupkg
+*.snupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+*.nuget.props
+*.nuget.targets
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+## Blazor / ASP.NET ##
+**/wwwroot/_content/
+**/wwwroot/dist/
+
+## Secrets ##
+appsettings.Development.json
+appsettings.Staging.json
+appsettings.Production.json
+secrets.json
+*.pfx
+*.key
+
+## OS ##
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+## Rider / JetBrains ##
+.idea/
+*.iml
+
+## Project-specific ##
+# Original HTML template source (not our code)
+ithub/
+# Claude Code project memory
+.claude/
+
+## Misc ##
+*.bak
+*.tmp
+*.temp
+/tmp/

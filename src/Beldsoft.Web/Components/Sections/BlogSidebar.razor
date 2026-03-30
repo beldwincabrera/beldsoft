@@ -1,0 +1,57 @@
+@inject IBlogService BlogSvc
+
+<aside class="sidebar-side">
+    <!-- Search -->
+    <div class="sidebar-widget search-widget">
+        <div class="widget-content">
+            <div class="search-form">
+                <input type="text" @bind="_search" placeholder="Search posts..." class="form-control" />
+                <button class="theme-btn"><span class="fa fa-search"></span></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Posts -->
+    <div class="sidebar-widget post-widget">
+        <div class="widget-title"><h4>Recent Posts</h4></div>
+        <div class="widget-content">
+            @foreach (var post in _recent)
+            {
+                <div class="post-widget_post d-flex align-items-center">
+                    <div class="post-widget_image">
+                        <a href="/blog/@post.Slug"><img src="/@post.FeaturedImage" alt="@post.Title" /></a>
+                    </div>
+                    <div class="post-widget_content">
+                        <h6><a href="/blog/@post.Slug">@post.Title</a></h6>
+                        <span>@post.PublishedAt.ToString("MMM dd, yyyy")</span>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- Categories -->
+    <div class="sidebar-widget category-widget">
+        <div class="widget-title"><h4>Categories</h4></div>
+        <div class="widget-content">
+            <ul>
+                @foreach (var cat in _categories)
+                {
+                    <li><a href="/blog">@cat</a></li>
+                }
+            </ul>
+        </div>
+    </div>
+</aside>
+
+@code {
+    private IEnumerable<BlogPostSummaryDto> _recent = [];
+    private IEnumerable<string> _categories = [];
+    private string _search = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _recent = await BlogSvc.GetRecentPostsAsync(4);
+        _categories = await BlogSvc.GetCategoriesAsync();
+    }
+}

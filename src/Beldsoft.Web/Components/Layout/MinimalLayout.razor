@@ -1,0 +1,23 @@
+@inherits LayoutComponentBase
+
+<MudThemeProvider Theme="BeldsoftTheme.Create()" />
+<MudSnackbarProvider />
+<MudDialogProvider />
+
+<div class="page-wrapper">
+    <Preloader />
+    <CustomCursor />
+
+    <AppHeader Variant="HeaderVariant.Three" />
+
+    @Body
+
+    <AppFooter Variant="FooterVariant.Three" />
+    <BackToTop />
+</div>
+
+<div id="blazor-error-ui" data-nosnippet>
+    An unhandled error has occurred.
+    <a href="." class="reload">Reload</a>
+    <span class="dismiss">&#10006;</span>
+</div>

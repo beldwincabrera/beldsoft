@@ -1,0 +1,66 @@
+@page "/team/{Slug}"
+@layout Layout.MainLayout
+@inject ITeamService TeamSvc
+
+<PageTitle>@(_member?.Name ?? "Team Member") - Beldsoft</PageTitle>
+
+@if (_member is null)
+{
+    <PageTitleBanner Title="Team Member"
+        Breadcrumbs="@(new[] { new Shared.PageTitleBanner.BreadcrumbItem("Home","/"), new Shared.PageTitleBanner.BreadcrumbItem("Team","/team") })" />
+    <section class="section"><div class="auto-container"><p>Member not found.</p></div></section>
+}
+else
+{
+    <PageTitleBanner Title="@_member.Name"
+        Breadcrumbs="@(new[] { new Shared.PageTitleBanner.BreadcrumbItem("Home","/"), new Shared.PageTitleBanner.BreadcrumbItem("Team","/team"), new Shared.PageTitleBanner.BreadcrumbItem(_member.Name,null) })" />
+
+    <section class="team-detail section">
+        <div class="auto-container">
+            <div class="row clearfix">
+                <div class="col-lg-4 col-md-12">
+                    <div class="team-detail_image">
+                        <img src="/@_member.Photo" alt="@_member.Name" />
+                    </div>
+                    <div class="team-detail_info">
+                        <h3>@_member.Name</h3>
+                        <div class="designation">@_member.Title</div>
+                        <ul class="contact-info">
+                            <li><span class="fa-solid fa-envelope"></span> <a href="mailto:@_member.Email">@_member.Email</a></li>
+                            <li><span class="fa-solid fa-phone"></span> <a href="tel:@_member.Phone">@_member.Phone</a></li>
+                        </ul>
+                        <SocialLinks Links="_member.Socials" />
+                    </div>
+                </div>
+                <div class="col-lg-8 col-md-12">
+                    <div class="team-detail_content">
+                        <h4>Biography</h4>
+                        <p>@_member.Bio</p>
+
+                        @if (_member.Skills.Any())
+                        {
+                            <h5>Skills</h5>
+                            @foreach (var skill in _member.Skills)
+                            {
+                                <div class="skill-item">
+                                    <div class="d-flex justify-content-between">
+                                        <span>@skill.Name</span>
+                                        <span>@skill.Percentage%</span>
+                                    </div>
+                                    <MudProgressLinear Value="@skill.Percentage" Color="Color.Primary" Size="Size.Medium" Class="mb-3" />
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
+@code {
+    [Parameter] public string Slug { get; set; } = string.Empty;
+    private TeamMemberDto? _member;
+    protected override async Task OnInitializedAsync() =>
+        _member = await TeamSvc.GetMemberBySlugAsync(Slug);
+}

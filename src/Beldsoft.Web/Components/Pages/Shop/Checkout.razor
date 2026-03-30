@@ -1,0 +1,76 @@
+@page "/checkout"
+@layout Layout.MainLayout
+@inject ICartService CartSvc
+@inject IContactService ContactSvc
+@inject ISnackbar Snackbar
+
+<PageTitle>Checkout - Beldsoft</PageTitle>
+
+<PageTitleBanner Title="Checkout"
+    Breadcrumbs="@(new[] { new Shared.PageTitleBanner.BreadcrumbItem("Home","/"), new Shared.PageTitleBanner.BreadcrumbItem("Checkout",null) })" />
+
+<section class="checkout-section section">
+    <div class="auto-container">
+        <div class="row clearfix">
+            <div class="col-lg-7 col-md-12">
+                <div class="checkout-form">
+                    <h4>Billing Information</h4>
+                    <EditForm Model="_form" OnValidSubmit="PlaceOrder">
+                        <DataAnnotationsValidator />
+                        <div class="row clearfix">
+                            <div class="col-md-6">
+                                <MudTextField @bind-Value="_form.Name" Label="Full Name" Variant="Variant.Outlined" Required="true" />
+                            </div>
+                            <div class="col-md-6">
+                                <MudTextField @bind-Value="_form.Email" Label="Email Address" Variant="Variant.Outlined" Required="true" />
+                            </div>
+                            <div class="col-md-6">
+                                <MudTextField @bind-Value="_form.Phone" Label="Phone Number" Variant="Variant.Outlined" />
+                            </div>
+                            <div class="col-md-6">
+                                <MudTextField @bind-Value="_form.Subject" Label="Notes (optional)" Variant="Variant.Outlined" />
+                            </div>
+                            <div class="col-12">
+                                <MudTextField @bind-Value="_form.Message" Label="Order Notes" Variant="Variant.Outlined" Lines="3" />
+                            </div>
+                            <div class="col-12">
+                                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" FullWidth="true">
+                                    Place Order
+                                </MudButton>
+                            </div>
+                        </div>
+                    </EditForm>
+                </div>
+            </div>
+            <div class="col-lg-5 col-md-12">
+                <div class="order-review">
+                    <h4>Your Order</h4>
+                    @foreach (var item in CartSvc.Cart.Items)
+                    {
+                        <div class="order-item d-flex justify-content-between">
+                            <span>@item.ProductName × @item.Quantity</span>
+                            <span>$@item.LineTotal.ToString("0.00")</span>
+                        </div>
+                    }
+                    <hr />
+                    <div class="d-flex justify-content-between total-row">
+                        <strong>Total:</strong>
+                        <strong>$@CartSvc.Cart.Total.ToString("0.00")</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@code {
+    private ContactFormDto _form = new();
+
+    private async Task PlaceOrder()
+    {
+        await ContactSvc.SubmitMessageAsync(_form);
+        CartSvc.Clear();
+        Snackbar.Add("Order placed successfully! We'll be in touch shortly.", Severity.Success);
+        _form = new();
+    }
+}

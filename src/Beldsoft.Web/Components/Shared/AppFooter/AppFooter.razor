@@ -1,0 +1,16 @@
+@if (Variant == FooterVariant.Main)
+{
+    <FooterMain />
+}
+else if (Variant == FooterVariant.Two)
+{
+    <FooterTwo />
+}
+else
+{
+    <FooterThree />
+}
+
+@code {
+    [Parameter] public FooterVariant Variant { get; set; } = FooterVariant.Main;
+}

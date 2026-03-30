@@ -1,0 +1,16 @@
+@if (Variant == HeaderVariant.One)
+{
+    <HeaderStyleOne />
+}
+else if (Variant == HeaderVariant.Two)
+{
+    <HeaderStyleTwo />
+}
+else
+{
+    <HeaderStyleThree />
+}
+
+@code {
+    [Parameter] public HeaderVariant Variant { get; set; } = HeaderVariant.One;
+}

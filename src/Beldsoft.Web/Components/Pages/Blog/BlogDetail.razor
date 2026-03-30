@@ -1,0 +1,119 @@
+@page "/blog/{Slug}"
+@layout Layout.MainLayout
+@inject IBlogService BlogSvc
+
+<PageTitle>@(_post?.Title ?? "Blog Post") - Beldsoft</PageTitle>
+
+@if (_post is null)
+{
+    <PageTitleBanner Title="Blog Post"
+        Breadcrumbs="@(new[] { new Shared.PageTitleBanner.BreadcrumbItem("Home","/"), new Shared.PageTitleBanner.BreadcrumbItem("Blog","/blog") })" />
+    <section class="section"><div class="auto-container"><p>Post not found.</p></div></section>
+}
+else
+{
+    <PageTitleBanner Title="@_post.Title"
+        Breadcrumbs="@(new[] { new Shared.PageTitleBanner.BreadcrumbItem("Home","/"), new Shared.PageTitleBanner.BreadcrumbItem("Blog","/blog"), new Shared.PageTitleBanner.BreadcrumbItem(_post.Title,null) })" />
+
+    <section class="blog-detail section">
+        <div class="auto-container">
+            <div class="row clearfix">
+                <div class="col-lg-8 col-md-12">
+                    <article class="blog-detail_post">
+                        <div class="blog-detail_image">
+                            <img src="/@_post.FeaturedImage" alt="@_post.Title" />
+                        </div>
+                        <div class="blog-detail_meta">
+                            <span class="fa-solid fa-calendar-days"></span> @_post.PublishedAt.ToString("MMMM dd, yyyy") &nbsp;
+                            <span class="fa-solid fa-user"></span> @_post.Author
+                        </div>
+                        <h2>@_post.Title</h2>
+                        <div>@((Microsoft.AspNetCore.Components.MarkupString)_post.Content)</div>
+
+                        <div class="blog-tags">
+                            @foreach (var tag in _post.Tags)
+                            {
+                                <span class="tag">@tag</span>
+                            }
+                        </div>
+
+                        <!-- Author bio -->
+                        <div class="blog-author_box d-flex align-items-center">
+                            <div class="blog-author_image">
+                                <img src="/@_post.AuthorImage" alt="@_post.Author" />
+                            </div>
+                            <div class="blog-author_info">
+                                <h5>@_post.Author</h5>
+                                <p>@_post.AuthorBio</p>
+                            </div>
+                        </div>
+
+                        <!-- Comments -->
+                        @if (_post.Comments.Any())
+                        {
+                            <div class="comments-section">
+                                <h4>@_post.Comments.Count Comments</h4>
+                                @foreach (var comment in _post.Comments)
+                                {
+                                    <div class="comment-box d-flex">
+                                        <div class="comment-image">
+                                            <img src="/@comment.AuthorImage" alt="@comment.AuthorName" />
+                                        </div>
+                                        <div class="comment-content">
+                                            <h6>@comment.AuthorName</h6>
+                                            <span>@comment.PostedAt.ToString("MMM dd, yyyy")</span>
+                                            <p>@comment.Content</p>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        }
+
+                        <!-- Comment Form -->
+                        <div class="comment-form">
+                            <h4>Leave a Comment</h4>
+                            <EditForm Model="_commentForm" OnValidSubmit="SubmitComment">
+                                <DataAnnotationsValidator />
+                                <div class="row clearfix">
+                                    <div class="col-md-6">
+                                        <MudTextField @bind-Value="_commentForm.Name" Label="Your Name" Variant="Variant.Outlined" Required="true" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <MudTextField @bind-Value="_commentForm.Email" Label="Email Address" Variant="Variant.Outlined" Required="true" />
+                                    </div>
+                                    <div class="col-12">
+                                        <MudTextField @bind-Value="_commentForm.Content" Label="Your Comment" Variant="Variant.Outlined" Lines="4" Required="true" />
+                                    </div>
+                                    <div class="col-12">
+                                        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Submit Comment</MudButton>
+                                    </div>
+                                </div>
+                            </EditForm>
+                        </div>
+                    </article>
+                </div>
+                <div class="col-lg-4 col-md-12">
+                    <BlogSidebar />
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
+@code {
+    [Parameter] public string Slug { get; set; } = string.Empty;
+    private BlogPostDto? _post;
+    private CommentFormModel _commentForm = new();
+
+    protected override async Task OnInitializedAsync() =>
+        _post = await BlogSvc.GetPostBySlugAsync(Slug);
+
+    private void SubmitComment() => _commentForm = new();
+
+    private class CommentFormModel
+    {
+        public string Name { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string Content { get; set; } = string.Empty;
+    }
+}

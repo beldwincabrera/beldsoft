@@ -1,0 +1,26 @@
+<!-- Clients One -->
+<section class="clients-one">
+    <div class="auto-container">
+        <div class="inner-container">
+            <div class="row clearfix">
+                <div class="column col-lg-3 col-md-12 col-sm-12">
+                    <div class="clients-one_title">Worked with world famous <br /> brands and partners</div>
+                </div>
+                <div class="column col-lg-9 col-md-12 col-sm-12">
+                    <div class="clients-one_slider swiper-container">
+                        <div class="swiper-wrapper">
+                            @for (int i = 1; i <= 5; i++)
+                            {
+                                <div class="swiper-slide">
+                                    <div class="client-image">
+                                        <a href="#"><img src="assets/images/clients/@(i).png" alt="" /></a>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

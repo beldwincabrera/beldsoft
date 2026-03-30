@@ -1,0 +1,59 @@
+@page "/contact-2"
+@layout Layout.TertiaryLayout
+@inject IContactService ContactSvc
+@inject ISnackbar Snackbar
+
+<PageTitle>Contact - Beldsoft</PageTitle>
+
+<PageTitleBanner Title="Contact Us"
+    Breadcrumbs="@(new[] { new Shared.PageTitleBanner.BreadcrumbItem("Home","/"), new Shared.PageTitleBanner.BreadcrumbItem("Contact",null) })" />
+
+<section class="contact-two section">
+    <div class="auto-container">
+        <div class="row clearfix">
+            <div class="col-lg-6 col-md-12">
+                <SectionTitle Tag="Get in Touch" Title="How Can We Help?" />
+                <EditForm Model="_form" OnValidSubmit="Submit">
+                    <DataAnnotationsValidator />
+                    <div class="row clearfix">
+                        <div class="col-md-6">
+                            <MudTextField @bind-Value="_form.Name" Label="Full Name" Variant="Variant.Outlined" Required="true" Class="mb-3" />
+                        </div>
+                        <div class="col-md-6">
+                            <MudTextField @bind-Value="_form.Email" Label="Email" Variant="Variant.Outlined" Required="true" Class="mb-3" />
+                        </div>
+                        <div class="col-12">
+                            <MudTextField @bind-Value="_form.Phone" Label="Phone" Variant="Variant.Outlined" Class="mb-3" />
+                        </div>
+                        <div class="col-12">
+                            <MudTextField @bind-Value="_form.Message" Label="Message" Variant="Variant.Outlined" Lines="5" Required="true" Class="mb-3" />
+                        </div>
+                        <div class="col-12">
+                            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Send Message</MudButton>
+                        </div>
+                    </div>
+                </EditForm>
+            </div>
+            <div class="col-lg-6 col-md-12">
+                <div class="contact-info-panel">
+                    <h4>Contact Information</h4>
+                    <ul class="contact-info-list">
+                        <li><span class="icon fa-solid fa-location-dot"></span> 24 Street, New York, USA</li>
+                        <li><span class="icon fa-solid fa-phone"></span> <a href="tel:+15551002000">+1 (555) 100-2000</a></li>
+                        <li><span class="icon fa-solid fa-envelope"></span> <a href="mailto:hello@beldsoft.com">hello@beldsoft.com</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@code {
+    private ContactFormDto _form = new();
+    private async Task Submit()
+    {
+        await ContactSvc.SubmitMessageAsync(_form);
+        Snackbar.Add("Message sent!", Severity.Success);
+        _form = new();
+    }
+}

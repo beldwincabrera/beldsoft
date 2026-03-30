@@ -1,0 +1,62 @@
+@page "/register"
+@layout Layout.MinimalLayout
+
+<PageTitle>Register - Beldsoft</PageTitle>
+
+<PageTitleBanner Title="Register / Login"
+    Breadcrumbs="@(new[] { new Shared.PageTitleBanner.BreadcrumbItem("Home","/"), new Shared.PageTitleBanner.BreadcrumbItem("Register",null) })" />
+
+<section class="register-section section">
+    <div class="auto-container">
+        <div class="row clearfix">
+            <div class="col-lg-6 col-md-12">
+                <div class="login-form-box">
+                    <h4>Login</h4>
+                    <div class="mb-3">
+                        <MudTextField @bind-Value="_loginEmail" Label="Email" Variant="Variant.Outlined" />
+                    </div>
+                    <div class="mb-3">
+                        <MudTextField @bind-Value="_loginPassword" Label="Password" InputType="InputType.Password" Variant="Variant.Outlined" />
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <MudCheckBox @bind-Value="_rememberMe" Label="Remember Me" />
+                        <a href="#">Forgot Password?</a>
+                    </div>
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" FullWidth="true">Login</MudButton>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12">
+                <div class="register-form-box">
+                    <h4>Create Account</h4>
+                    <div class="mb-3">
+                        <MudTextField @bind-Value="_regName" Label="Username" Variant="Variant.Outlined" />
+                    </div>
+                    <div class="mb-3">
+                        <MudTextField @bind-Value="_regEmail" Label="Email" Variant="Variant.Outlined" />
+                    </div>
+                    <div class="mb-3">
+                        <MudTextField @bind-Value="_regPassword" Label="Password" InputType="InputType.Password" Variant="Variant.Outlined" />
+                    </div>
+                    <div class="mb-3">
+                        <MudTextField @bind-Value="_regConfirm" Label="Confirm Password" InputType="InputType.Password" Variant="Variant.Outlined" />
+                    </div>
+                    <div class="mb-3">
+                        <MudCheckBox @bind-Value="_agreeTerms" Label="I agree to the Terms & Conditions" />
+                    </div>
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" FullWidth="true">Register</MudButton>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@code {
+    private string _loginEmail = string.Empty;
+    private string _loginPassword = string.Empty;
+    private bool _rememberMe;
+    private string _regName = string.Empty;
+    private string _regEmail = string.Empty;
+    private string _regPassword = string.Empty;
+    private string _regConfirm = string.Empty;
+    private bool _agreeTerms;
+}

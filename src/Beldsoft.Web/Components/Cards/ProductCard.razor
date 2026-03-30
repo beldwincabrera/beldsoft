@@ -1,0 +1,37 @@
+<div class="product-block_one">
+    <div class="product-block_one-image">
+        <a href="/shop/@Product.Slug">
+            <img src="/@(Product.Images.FirstOrDefault() ?? "images/resource/product-1.jpg")" alt="@Product.Name" />
+        </a>
+        @if (Product.SalePrice.HasValue)
+        {
+            <div class="product-sale-badge">Sale</div>
+        }
+    </div>
+    <div class="product-block_one-content">
+        <div class="product-block_one-category">@Product.Category</div>
+        <h5 class="product-block_one-title"><a href="/shop/@Product.Slug">@Product.Name</a></h5>
+        <div class="product-block_one-price">
+            @if (Product.SalePrice.HasValue)
+            {
+                <span class="sale-price">$@Product.SalePrice.Value.ToString("0.00")</span>
+                <span class="original-price">$@Product.Price.ToString("0.00")</span>
+            }
+            else
+            {
+                <span>$@Product.Price.ToString("0.00")</span>
+            }
+        </div>
+        <StarRating Rating="@((int)Math.Round(Product.Rating))" />
+        <button class="theme-btn btn-style-one" @onclick="AddToCart">
+            <span class="btn-title">Add to Cart</span>
+        </button>
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public ProductDto Product { get; set; } = null!;
+    [Parameter] public EventCallback<ProductDto> OnAddToCart { get; set; }
+
+    private async Task AddToCart() => await OnAddToCart.InvokeAsync(Product);
+}

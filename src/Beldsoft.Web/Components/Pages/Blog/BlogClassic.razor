@@ -1,0 +1,53 @@
+@page "/blog-classic"
+@layout Layout.MainLayout
+@inject IBlogService BlogSvc
+
+<PageTitle>Blog Classic - Beldsoft</PageTitle>
+
+<PageTitleBanner Title="Blog Classic"
+    Breadcrumbs="@(new[] { new Shared.PageTitleBanner.BreadcrumbItem("Home","/"), new Shared.PageTitleBanner.BreadcrumbItem("Blog Classic",null) })" />
+
+<section class="blog-classic section">
+    <div class="auto-container">
+        <div class="row clearfix">
+            <div class="col-lg-8 col-md-12">
+                @foreach (var post in _posts)
+                {
+                    <div class="blog-classic_post">
+                        <div class="blog-classic_image">
+                            <a href="/blog/@post.Slug"><img src="/@post.FeaturedImage" alt="@post.Title" /></a>
+                        </div>
+                        <div class="blog-classic_content">
+                            <ul class="blog-meta">
+                                <li><span class="fa-solid fa-calendar-days"></span> @post.PublishedAt.ToString("MMM dd, yyyy")</li>
+                                <li><span class="fa-solid fa-user"></span> @post.Author</li>
+                            </ul>
+                            <h4><a href="/blog/@post.Slug">@post.Title</a></h4>
+                            <p>@post.Excerpt</p>
+                            <a href="/blog/@post.Slug" class="theme-btn btn-style-one"><span class="btn-title">Read More</span></a>
+                        </div>
+                    </div>
+                }
+                <div class="d-flex justify-content-center mt-4">
+                    <MudPagination Count="@_totalPages" @bind-Selected="_page" Color="Color.Primary" />
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-12">
+                <BlogSidebar />
+            </div>
+        </div>
+    </div>
+</section>
+
+@code {
+    private IEnumerable<BlogPostSummaryDto> _posts = [];
+    private int _page = 1;
+    private int _totalPages = 1;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _posts = await BlogSvc.GetPostsAsync(_page, 5);
+        var total = await BlogSvc.GetTotalCountAsync();
+        _totalPages = (int)Math.Ceiling(total / 5.0);
+    }
+}

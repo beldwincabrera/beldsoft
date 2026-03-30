@@ -1,0 +1,29 @@
+@page "/services"
+@layout Layout.MainLayout
+@inject IServiceService ServiceSvc
+
+<PageTitle>Our Services - Beldsoft</PageTitle>
+
+<PageTitleBanner Title="Our Services"
+    Breadcrumbs="@(new[] { new Shared.PageTitleBanner.BreadcrumbItem("Home","/"), new Shared.PageTitleBanner.BreadcrumbItem("Services",null) })" />
+
+<section class="services-page section">
+    <div class="auto-container">
+        <div class="row clearfix">
+            @foreach (var svc in _services)
+            {
+                <div class="col-lg-4 col-md-6">
+                    <ServiceCard Service="svc" />
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<CtaSection />
+
+@code {
+    private IEnumerable<ServiceDto> _services = [];
+    protected override async Task OnInitializedAsync() =>
+        _services = await ServiceSvc.GetServicesAsync();
+}

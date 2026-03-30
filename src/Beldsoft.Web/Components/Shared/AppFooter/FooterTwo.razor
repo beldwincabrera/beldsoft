@@ -1,0 +1,74 @@
+<footer class="footer-two">
+    <div class="footer-upper">
+        <div class="auto-container">
+            <div class="row clearfix">
+                <div class="col-lg-4 col-md-6 footer-column">
+                    <div class="footer-widget logo-widget">
+                        <div class="footer-logo">
+                            <a href="/"><img src="/assets/images/footer-logo-two.svg" alt="Beldsoft" /></a>
+                        </div>
+                        <p>Empowering businesses with innovative technology solutions and strategic IT consulting.</p>
+                        <ul class="social-links d-flex">
+                            <li><a href="#" class="fa-brands fa-facebook-f"></a></li>
+                            <li><a href="#" class="fa-brands fa-instagram"></a></li>
+                            <li><a href="#" class="fa-brands fa-x-twitter"></a></li>
+                            <li><a href="#" class="fa-brands fa-linkedin-in"></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-3 footer-column">
+                    <div class="footer-widget links-widget">
+                        <h4 class="footer-title">Company</h4>
+                        <ul>
+                            <li><a href="/about">About Us</a></li>
+                            <li><a href="/services">Services</a></li>
+                            <li><a href="/projects">Projects</a></li>
+                            <li><a href="/team">Our Team</a></li>
+                            <li><a href="/pricing">Pricing</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-3 footer-column">
+                    <div class="footer-widget links-widget">
+                        <h4 class="footer-title">Explore</h4>
+                        <ul>
+                            <li><a href="/blog">Blog</a></li>
+                            <li><a href="/faq">FAQ</a></li>
+                            <li><a href="/contact">Contact</a></li>
+                            <li><a href="/privacy-policy">Privacy Policy</a></li>
+                            <li><a href="/terms">Terms</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 footer-column">
+                    <div class="footer-widget newsletter-widget">
+                        <h4 class="footer-title">Newsletter</h4>
+                        <p>Subscribe for the latest updates and insights.</p>
+                        <div class="newsletter-form d-flex">
+                            <input type="email" placeholder="Your email address" @bind="_email" class="form-control" />
+                            <button @onclick="Subscribe" class="theme-btn btn-style-one"><span class="btn-title">Subscribe</span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <div class="auto-container">
+            <div class="d-flex justify-content-between align-items-center flex-wrap">
+                <div class="footer-bottom_copyright">
+                    &copy; @DateTime.Now.Year <a href="/">Beldsoft</a>. All Rights Reserved.
+                </div>
+                <ul class="footer-bottom_nav">
+                    <li><a href="/privacy-policy">Privacy Policy</a></li>
+                    <li><a href="/terms">Terms</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+@code {
+    private string _email = string.Empty;
+    private void Subscribe() => _email = string.Empty;
+}

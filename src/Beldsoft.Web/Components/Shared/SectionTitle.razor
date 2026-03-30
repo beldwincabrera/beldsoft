@@ -1,0 +1,25 @@
+<div class="sec-title title-anim @Class">
+    @if (!string.IsNullOrEmpty(Tag))
+    {
+        <div class="sec-title_title">
+            @Tag
+            <div class="sec-title_dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    }
+    <h2 class="sec-title_heading">@Title</h2>
+    @if (!string.IsNullOrEmpty(Text))
+    {
+        <div class="sec-title_text">@Text</div>
+    }
+</div>
+
+@code {
+    [Parameter] public string Title { get; set; } = string.Empty;
+    [Parameter] public string Tag { get; set; } = string.Empty;
+    [Parameter] public string Text { get; set; } = string.Empty;
+    [Parameter] public string Class { get; set; } = string.Empty;
+}

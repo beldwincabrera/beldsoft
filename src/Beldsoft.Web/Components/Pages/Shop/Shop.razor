@@ -1,0 +1,47 @@
+@page "/shop"
+@layout Layout.MainLayout
+@inject IProductService ProductSvc
+@inject ICartService CartSvc
+@inject ISnackbar Snackbar
+
+<PageTitle>Shop - Beldsoft</PageTitle>
+
+<PageTitleBanner Title="Our Shop"
+    Breadcrumbs="@(new[] { new Shared.PageTitleBanner.BreadcrumbItem("Home","/"), new Shared.PageTitleBanner.BreadcrumbItem("Shop",null) })" />
+
+<section class="shop-page section">
+    <div class="auto-container">
+        <div class="row clearfix">
+            @foreach (var product in _products)
+            {
+                <div class="col-lg-4 col-md-6">
+                    <ProductCard Product="product" OnAddToCart="AddToCart" />
+                </div>
+            }
+        </div>
+        <div class="d-flex justify-content-center mt-4">
+            <MudPagination Count="@_totalPages" @bind-Selected="_page" Color="Color.Primary" />
+        </div>
+    </div>
+</section>
+
+@code {
+    private IEnumerable<ProductDto> _products = [];
+    private int _page = 1;
+    private int _totalPages = 1;
+
+    protected override async Task OnInitializedAsync() => await LoadProducts();
+
+    private async Task LoadProducts()
+    {
+        _products = await ProductSvc.GetProductsAsync(_page, 9);
+        var total = await ProductSvc.GetTotalCountAsync();
+        _totalPages = (int)Math.Ceiling(total / 9.0);
+    }
+
+    private void AddToCart(ProductDto product)
+    {
+        CartSvc.AddItem(product);
+        Snackbar.Add($"{product.Name} added to cart!", Severity.Success);
+    }
+}
