@@ -1,6 +1,6 @@
 <div class="team-block_one">
     <div class="team-block_one-image">
-        <img src="/assets/@Member.Photo" alt="@Member.Name" />
+        <img src="/@Member.Photo" alt="@Member.Name" loading="lazy" decoding="async" />
         <ul class="team-block_one-social">
             @if (Member.Socials?.Facebook is not null)
             { <li><a href="@Member.Socials.Facebook" class="fa-brands fa-facebook-f"></a></li> }

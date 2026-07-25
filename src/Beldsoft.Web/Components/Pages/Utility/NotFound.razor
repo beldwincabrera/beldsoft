@@ -1,5 +1,6 @@
 @page "/404"
 @layout Layout.MinimalLayout
+@inject IHttpContextAccessor HttpContextAccessor
 
 <PageTitle>Page Not Found - Beldsoft</PageTitle>
 
@@ -7,9 +8,9 @@
     <div class="auto-container">
         <div class="inner-container">
             <div class="image-box">
-                <img src="assets/images/resource/error.png" alt="" />
+                <img src="assets/images/resource/error.png" alt="" loading="lazy" decoding="async" width="1283" height="577" />
             </div>
-            <h2>Oops! Page Not Found</h2>
+            <h1>Page Not Found</h1>
             <div class="text">The page you're looking for doesn't exist or has been moved.</div>
             <div class="link-box">
                 <a href="/" class="theme-btn btn-style-one">
@@ -28,3 +29,14 @@
         </div>
     </div>
 </section>
+
+@code {
+    protected override void OnInitialized()
+    {
+        var response = HttpContextAccessor.HttpContext?.Response;
+        if (response is not null && !response.HasStarted)
+        {
+            response.StatusCode = StatusCodes.Status404NotFound;
+        }
+    }
+}

@@ -8,21 +8,7 @@
 
 ***/
 
-@import url('global.css');
-@import url('header.css');
-@import url('footer.css');
-@import url('animate.css');
-@import url('rtl.css');
-@import url('dark-body.css');
-@import url('jquery-ui.css');
-@import url('swiper.min.css');
-@import url('font-awesome.css');
-@import url('custom-animate.css');
-@import url('magnific-popup.css');
-@import url('odometer-theme-default.css');
-@import url('jquery.bootstrap-touchspin.css');
-
-/*** 
+/***
 
 ====================================================================
 	Main Slider
@@ -4848,7 +4834,7 @@
     top: -162px;
     bottom: -120px;
     width: 200%;
-    background: url(../images/background/video-shape.png);
+    background: url(../images/background/video-shape.webp);
     background-position: right top;
     background-repeat: no-repeat;
 }

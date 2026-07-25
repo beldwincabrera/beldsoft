@@ -22,41 +22,43 @@
         {
             <div class="row clearfix">
                 <div class="col-lg-8 col-md-12">
-                    <table class="cart-table table">
-                        <thead>
-                            <tr>
-                                <th>Product</th>
-                                <th>Price</th>
-                                <th>Qty</th>
-                                <th>Total</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in CartSvc.Cart.Items)
-                            {
-                                var currentItem = item;
+                    <div class="table-responsive cart-table-wrap">
+                        <table class="cart-table table">
+                            <thead>
                                 <tr>
-                                    <td>
-                                        <img src="/@currentItem.ProductImage" alt="@currentItem.ProductName" style="width:60px;margin-right:8px;" />
-                                        @currentItem.ProductName
-                                    </td>
-                                    <td>$@currentItem.UnitPrice.ToString("0.00")</td>
-                                    <td>
-                                        <MudNumericField T="int" Value="currentItem.Quantity"
-                                                         ValueChanged="qty => UpdateQty(currentItem.ProductId, qty)"
-                                                         Min="1" Style="width:80px;" />
-                                    </td>
-                                    <td>$@currentItem.LineTotal.ToString("0.00")</td>
-                                    <td>
-                                        <button @onclick="() => Remove(currentItem.ProductId)" style="background:none;border:none;cursor:pointer;color:red;">
-                                            <span class="fa-solid fa-xmark"></span>
-                                        </button>
-                                    </td>
+                                    <th>Product</th>
+                                    <th>Price</th>
+                                    <th>Qty</th>
+                                    <th>Total</th>
+                                    <th><span class="visually-hidden">Actions</span></th>
                                 </tr>
-                            }
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in CartSvc.Cart.Items)
+                                {
+                                    var currentItem = item;
+                                    <tr>
+                                        <td>
+                                            <img src="/@currentItem.ProductImage" alt="" style="width:60px;margin-right:8px;" loading="lazy" decoding="async" />
+                                            @currentItem.ProductName
+                                        </td>
+                                        <td>$@currentItem.UnitPrice.ToString("0.00")</td>
+                                        <td>
+                                            <MudNumericField T="int" Value="currentItem.Quantity"
+                                                             ValueChanged="qty => UpdateQty(currentItem.ProductId, qty)"
+                                                             Min="1" Style="width:80px;" />
+                                        </td>
+                                        <td>$@currentItem.LineTotal.ToString("0.00")</td>
+                                        <td>
+                                            <button class="cart-remove" @onclick="() => Remove(currentItem.ProductId)" aria-label="Remove @currentItem.ProductName from cart">
+                                                <span class="fa-solid fa-xmark" aria-hidden="true"></span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <div class="col-lg-4 col-md-12">
                     <div class="cart-totals" style="background:#f8f8f8;padding:2rem;border-radius:8px;">

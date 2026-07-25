@@ -1,13 +1,15 @@
 @page "/about"
 @layout Layout.MainLayout
 
-<PageTitle>About Us - Beldsoft</PageTitle>
+<PageTitle>About Beldsoft | Software Engineering Partner</PageTitle>
 
 <PageTitleBanner Title="About Us"
     Breadcrumbs="@(new[] { new Shared.PageTitleBanner.BreadcrumbItem("Home","/"), new Shared.PageTitleBanner.BreadcrumbItem("About",null) })" />
 
 <AboutSection />
 <ServicesSection />
-<TeamSection />
 <TestimonialsSection />
-<CtaSection />
+<CtaSection Tag="Need a dependable engineering partner?"
+            Title="Let's talk about the outcome, constraints, and smartest next step."
+            ButtonText="Discuss your project"
+            ButtonHref="/contact" />

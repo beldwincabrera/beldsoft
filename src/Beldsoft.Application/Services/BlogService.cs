@@ -11,7 +11,7 @@ public class BlogService : IBlogService
         {
             Id = 1, Slug = "the-future-of-ai-in-business", Title = "The Future of AI in Business",
             Excerpt = "Artificial intelligence is reshaping how businesses operate, from automation to predictive analytics.",
-            FeaturedImage = "assets/images/resource/news-1.jpg", Author = "John Smith", AuthorImage = "assets/images/resource/author-1.jpg",
+            FeaturedImage = "assets/images/resource/news-1.webp", Author = "John Smith", AuthorImage = "assets/images/resource/author-1.jpg",
             PublishedAt = new DateTime(2025, 3, 10), CommentCount = 4,
             Categories = ["Technology", "AI"], Tags = ["AI", "Business", "Innovation"]
         },
@@ -19,7 +19,7 @@ public class BlogService : IBlogService
         {
             Id = 2, Slug = "cloud-migration-best-practices", Title = "Cloud Migration Best Practices",
             Excerpt = "Moving your infrastructure to the cloud requires careful planning and execution.",
-            FeaturedImage = "assets/images/resource/news-2.jpg", Author = "Jane Doe", AuthorImage = "assets/images/resource/author-2.jpg",
+            FeaturedImage = "assets/images/resource/news-2.webp", Author = "Jane Doe", AuthorImage = "assets/images/resource/author-2.jpg",
             PublishedAt = new DateTime(2025, 3, 5), CommentCount = 7,
             Categories = ["Cloud", "Infrastructure"], Tags = ["Cloud", "DevOps", "Migration"]
         },
@@ -27,7 +27,7 @@ public class BlogService : IBlogService
         {
             Id = 3, Slug = "cybersecurity-trends-2025", Title = "Cybersecurity Trends for 2025",
             Excerpt = "Stay ahead of threats with an overview of the most important cybersecurity trends this year.",
-            FeaturedImage = "assets/images/resource/news-3.jpg", Author = "Mike Johnson", AuthorImage = "assets/images/resource/author-3.jpg",
+            FeaturedImage = "assets/images/resource/news-3.webp", Author = "Mike Johnson", AuthorImage = "assets/images/resource/author-3.jpg",
             PublishedAt = new DateTime(2025, 2, 28), CommentCount = 12,
             Categories = ["Security"], Tags = ["Security", "Cybersecurity", "Trends"]
         },
@@ -35,7 +35,7 @@ public class BlogService : IBlogService
         {
             Id = 4, Slug = "building-scalable-microservices", Title = "Building Scalable Microservices",
             Excerpt = "Microservices architecture enables teams to build and deploy independently.",
-            FeaturedImage = "assets/images/resource/news-1.jpg", Author = "Sarah Lee", AuthorImage = "assets/images/resource/author-1.jpg",
+            FeaturedImage = "assets/images/resource/news-1.webp", Author = "Sarah Lee", AuthorImage = "assets/images/resource/author-1.jpg",
             PublishedAt = new DateTime(2025, 2, 20), CommentCount = 3,
             Categories = ["Architecture", "Development"], Tags = ["Microservices", ".NET", "Architecture"]
         },
@@ -43,7 +43,7 @@ public class BlogService : IBlogService
         {
             Id = 5, Slug = "ux-design-principles", Title = "UX Design Principles for Tech Products",
             Excerpt = "Great user experience drives adoption and reduces churn in SaaS products.",
-            FeaturedImage = "assets/images/resource/news-2.jpg", Author = "Tom Brown", AuthorImage = "assets/images/resource/author-2.jpg",
+            FeaturedImage = "assets/images/resource/news-2.webp", Author = "Tom Brown", AuthorImage = "assets/images/resource/author-2.jpg",
             PublishedAt = new DateTime(2025, 2, 14), CommentCount = 8,
             Categories = ["Design", "UX"], Tags = ["UX", "Design", "Product"]
         },
@@ -51,7 +51,7 @@ public class BlogService : IBlogService
         {
             Id = 6, Slug = "devops-pipeline-automation", Title = "DevOps Pipeline Automation",
             Excerpt = "Automated pipelines reduce manual errors and speed up delivery cycles.",
-            FeaturedImage = "assets/images/resource/news-3.jpg", Author = "John Smith", AuthorImage = "assets/images/resource/author-1.jpg",
+            FeaturedImage = "assets/images/resource/news-3.webp", Author = "John Smith", AuthorImage = "assets/images/resource/author-1.jpg",
             PublishedAt = new DateTime(2025, 2, 7), CommentCount = 5,
             Categories = ["DevOps", "Automation"], Tags = ["CI/CD", "DevOps", "Automation"]
         },

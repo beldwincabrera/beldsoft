@@ -1,77 +1,31 @@
 @inject ITestimonialService TestimonialSvc
 
-<section class="testimonial-one">
-    <div class="testimonial-one_pattern-layer" style="background-image:url(assets/images/background/pattern-6.png)"></div>
+<section class="bs-testimonials section" aria-labelledby="testimonials-title">
     <div class="auto-container">
+        <div class="bs-section-heading">
+            <div>
+                <div class="bs-eyebrow bs-eyebrow_dark">Client perspective</div>
+                <h2 id="testimonials-title">Partnerships built on clarity, ownership, and outcomes.</h2>
+            </div>
+            <p>Strong delivery is more than shipping features. It means understanding the business context, communicating clearly, and leaving teams stronger than we found them.</p>
+        </div>
+
         <div class="row clearfix">
-            <!-- Content Column -->
-            <div class="testimonial-one_content-column col-lg-5 col-md-12 col-sm-12">
-                <div class="sec-title title-anim">
-                    <div class="sec-title_title">
-                        Testimonials
-                        <div class="sec-title_dots">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-                    </div>
-                    <h2 class="sec-title_heading">We want the best work For Us!</h2>
-                    <div class="sec-title_text">We collaborate with clients to find where seemingly disparate interests meet.</div>
+            @foreach (var testimonial in _testimonials)
+            {
+                <div class="col-lg-4 col-md-6">
+                    <TestimonialCard Review="testimonial" />
                 </div>
-                <div class="testimonial-one_talk d-flex"><span class="up-down_animation">Lets Talk</span> <i><img src="assets/images/icons/hand-shake.png" alt="" /></i></div>
-                <div class="testimonial-one_button d-flex justify-content-end">
-                    <a href="/contact" class="theme-btn btn-style-three">
-                        <span class="btn-wrap">
-                            <span class="text-one">Contact Us</span>
-                            <span class="text-two">Contact Us</span>
-                        </span>
-                    </a>
-                </div>
-                <div class="about-one_arrows" style="background-image:url(assets/images/icons/testimonial-arrow.png)"></div>
-            </div>
-            <!-- Carousel Column -->
-            <div class="testimonial-one_carousel-column col-lg-7 col-md-12 col-sm-12">
-                <div class="testimonial-one_carousel-content">
-                    <div class="testimonial-one_carousel-layer" style="background-image:url(assets/images/background/pattern-7.png)"></div>
+            }
+        </div>
 
-                    <div class="testimonial-one_carousel swiper-container">
-                        <div class="swiper-wrapper">
-                            @foreach (var t in _testimonials)
-                            {
-                                <div class="swiper-slide">
-                                    <div class="testimonial-block_one">
-                                        <div class="testimonial-block_one-inner">
-                                            <div class="testimonial-block_one-author">
-                                                <div class="testimonial-block_one-author_image">
-                                                    <img src="@t.ClientImage" alt="" />
-                                                </div>
-                                                @t.ClientName
-                                                <span>@t.ClientTitle, @t.ClientCompany</span>
-                                            </div>
-                                            <div class="testimonial-block_one-text">" @t.Quote "</div>
-                                            <div class="testimonial-block_one-rating">
-                                                @t.Rating &nbsp;
-                                                @for (int i = 0; i < (int)t.Rating; i++)
-                                                {
-                                                    <span class="fa fa-star"></span>
-                                                }
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            }
-                        </div>
-
-                        <!-- Navigation Arrows -->
-                        <div class="testimonial-one_arrow">
-                            <div class="testimonial-one_carousel-prev fas fa-angle-left fa-fw"></div>
-                            <div class="testimonial-one_carousel-next fas fa-angle-right fa-fw"></div>
-                        </div>
-
-                    </div>
-
-                </div>
-            </div>
+        <div class="bs-testimonials_action">
+            <a href="/contact" class="theme-btn btn-style-one">
+                <span class="btn-wrap">
+                    <span class="text-one">Discuss your project</span>
+                    <span class="text-two">Discuss your project</span>
+                </span>
+            </a>
         </div>
     </div>
 </section>

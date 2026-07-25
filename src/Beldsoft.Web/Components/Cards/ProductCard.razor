@@ -1,7 +1,7 @@
 <div class="product-block_one">
     <div class="product-block_one-image">
         <a href="/shop/@Product.Slug">
-            <img src="/@(Product.Images.FirstOrDefault() ?? "images/resource/product-1.jpg")" alt="@Product.Name" />
+            <img src="/@(Product.Images.FirstOrDefault() ?? "images/resource/product-1.jpg")" alt="@Product.Name" loading="lazy" decoding="async" />
         </a>
         @if (Product.SalePrice.HasValue)
         {

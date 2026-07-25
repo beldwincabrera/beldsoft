@@ -1,19 +1,21 @@
-<section class="page-title" style="background-image: url(/assets/images/background/3.jpg)">
+<section class="page-title" style="background-image: url(/assets/images/background/3.webp)">
     <div class="auto-container">
         <h1 class="page-title_heading">@Title</h1>
-        <ul class="bread-crumb clearfix">
-            @foreach (var crumb in Breadcrumbs)
-            {
-                @if (crumb.Href is not null)
+        <nav aria-label="Breadcrumb">
+            <ol class="bread-crumb clearfix">
+                @foreach (var crumb in Breadcrumbs)
                 {
-                    <li><a href="@crumb.Href">@crumb.Label</a></li>
+                    @if (crumb.Href is not null)
+                    {
+                        <li><a href="@crumb.Href">@crumb.Label</a></li>
+                    }
+                    else
+                    {
+                        <li aria-current="page">@crumb.Label</li>
+                    }
                 }
-                else
-                {
-                    <li>@crumb.Label</li>
-                }
-            }
-        </ul>
+            </ol>
+        </nav>
     </div>
 </section>
 

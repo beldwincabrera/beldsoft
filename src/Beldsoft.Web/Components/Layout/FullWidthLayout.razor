@@ -3,8 +3,12 @@
 <MudThemeProvider Theme="BeldsoftTheme.Create()" />
 <MudSnackbarProvider />
 
+<SiteMetadata />
+<a class="skip-link" href="#main-content">Skip to main content</a>
 <div class="page-wrapper">
-    @Body
+    <main id="main-content">
+        @Body
+    </main>
 </div>
 
 <div id="blazor-error-ui" data-nosnippet>

@@ -21,7 +21,7 @@ else
                 <div class="col-lg-8 col-md-12">
                     <article class="blog-detail_post">
                         <div class="blog-detail_image">
-                            <img src="/@_post.FeaturedImage" alt="@_post.Title" />
+                            <img src="/@_post.FeaturedImage" alt="@_post.Title" loading="lazy" decoding="async" />
                         </div>
                         <div class="blog-detail_meta">
                             <span class="fa-solid fa-calendar-days"></span> @_post.PublishedAt.ToString("MMMM dd, yyyy") &nbsp;
@@ -40,7 +40,7 @@ else
                         <!-- Author bio -->
                         <div class="blog-author_box d-flex align-items-center">
                             <div class="blog-author_image">
-                                <img src="/@_post.AuthorImage" alt="@_post.Author" />
+                                <img src="/@_post.AuthorImage" alt="@_post.Author" loading="lazy" decoding="async" />
                             </div>
                             <div class="blog-author_info">
                                 <h5>@_post.Author</h5>
@@ -57,7 +57,7 @@ else
                                 {
                                     <div class="comment-box d-flex">
                                         <div class="comment-image">
-                                            <img src="/@comment.AuthorImage" alt="@comment.AuthorName" />
+                                            <img src="/@comment.AuthorImage" alt="@comment.AuthorName" loading="lazy" decoding="async" />
                                         </div>
                                         <div class="comment-content">
                                             <h6>@comment.AuthorName</h6>

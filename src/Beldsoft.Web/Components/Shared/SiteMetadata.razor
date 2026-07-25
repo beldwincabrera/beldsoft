@@ -1,0 +1,85 @@
+@implements IDisposable
+@inject NavigationManager Navigation
+
+<HeadContent>
+    <meta name="description" content="@Description" />
+    <meta name="robots" content="@(NoIndex ? "noindex, nofollow" : "index, follow, max-image-preview:large")" />
+    <link rel="canonical" href="@CanonicalUrl" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Beldsoft" />
+    <meta property="og:title" content="@SocialTitle" />
+    <meta property="og:description" content="@Description" />
+    <meta property="og:url" content="@CanonicalUrl" />
+    <meta property="og:image" content="@Navigation.ToAbsoluteUri("/assets/images/main-slider/1.webp")" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="@SocialTitle" />
+    <meta name="twitter:description" content="@Description" />
+    @if (Path == "/")
+    {
+        <link rel="preload" as="image" href="/assets/images/main-slider/1.webp" fetchpriority="high" />
+    }
+</HeadContent>
+
+@code {
+    private string Path => "/" + Navigation.ToBaseRelativePath(Navigation.Uri).Split('?', '#')[0].Trim('/');
+    private bool NoIndex =>
+        Path is "/cart" or "/checkout" or "/register" or "/coming-soon" or "/404" or "/Error" or "/contact-2" or "/blog-classic" ||
+        Path == "/shop" || Path.StartsWith("/shop/");
+    private string CanonicalPath => Path switch
+    {
+        "/contact-2" => "/contact",
+        "/blog-classic" => "/blog",
+        _ => Path
+    };
+    private string CanonicalUrl => Navigation.ToAbsoluteUri(CanonicalPath == "/" ? "/" : CanonicalPath).AbsoluteUri;
+
+    private string SocialTitle => Path switch
+    {
+        "/" => "Beldsoft | Software Engineering, Cloud & AI Solutions",
+        "/about" => "About Beldsoft | Practical Software Engineering",
+        "/services" => "Software Engineering Services | Beldsoft",
+        "/projects" => "Software Engineering Projects | Beldsoft",
+        "/team" => "Meet the Beldsoft Engineering Team",
+        "/pricing" => "Engagement Models and Pricing | Beldsoft",
+        "/faq" => "Software Development FAQ | Beldsoft",
+        "/testimonials" => "Client Testimonials | Beldsoft",
+        "/blog" or "/blog-classic" => "Software Engineering Insights | Beldsoft",
+        "/contact" or "/contact-2" => "Discuss Your Software Project | Beldsoft",
+        "/shop" => "Digital Products and Resources | Beldsoft",
+        "/privacy-policy" => "Privacy Policy | Beldsoft",
+        "/terms" => "Terms and Conditions | Beldsoft",
+        _ when Path.StartsWith("/services/") => "Software Engineering Service | Beldsoft",
+        _ when Path.StartsWith("/projects/") => "Software Engineering Case Study | Beldsoft",
+        _ when Path.StartsWith("/blog/") => "Software Engineering Article | Beldsoft",
+        _ when Path.StartsWith("/team/") => "Beldsoft Team Member",
+        _ when Path.StartsWith("/shop/") => "Digital Product | Beldsoft",
+        _ => "Beldsoft | Software Engineering"
+    };
+
+    private string Description => Path switch
+    {
+        "/" => "Beldsoft designs, builds, modernizes, and supports secure software products, cloud platforms, and AI-enabled business solutions.",
+        "/about" => "Learn how Beldsoft combines product thinking, software engineering, cloud expertise, and transparent delivery to solve complex business problems.",
+        "/services" => "Explore Beldsoft services for custom software, product design, cloud and DevOps, application modernization, AI, and engineering advisory.",
+        "/projects" => "See examples of secure, scalable web, cloud, data, AI, and modernization solutions delivered for real business challenges.",
+        "/team" => "Meet the product, design, cloud, and software engineering specialists behind Beldsoft.",
+        "/pricing" => "Compare flexible Beldsoft engagement models for discovery, delivery, modernization, and ongoing engineering support.",
+        "/faq" => "Answers to common questions about Beldsoft software projects, delivery process, security, communication, ownership, and ongoing support.",
+        "/testimonials" => "Read what clients say about working with Beldsoft on software engineering, cloud, security, and AI initiatives.",
+        "/blog" or "/blog-classic" => "Practical articles about software architecture, cloud, AI, DevOps, security, product design, and engineering leadership.",
+        "/contact" or "/contact-2" => "Tell Beldsoft about your product, platform, modernization, cloud, or AI challenge and get a practical next-step recommendation.",
+        "/shop" => "Browse Beldsoft digital products and resources for software teams.",
+        "/privacy-policy" => "Learn how Beldsoft collects, uses, protects, and retains information submitted through this website.",
+        "/terms" => "Review the terms that govern use of the Beldsoft website and professional services.",
+        _ when Path.StartsWith("/services/") => "Learn how Beldsoft approaches this software engineering capability, from discovery and architecture through delivery and support.",
+        _ when Path.StartsWith("/projects/") => "Explore the business challenge, technical approach, and technologies behind this Beldsoft software engineering project.",
+        _ when Path.StartsWith("/blog/") => "Read practical software engineering guidance from Beldsoft.",
+        _ when Path.StartsWith("/team/") => "Learn about the experience and expertise of this Beldsoft team member.",
+        _ => "Beldsoft provides practical software engineering, cloud, modernization, AI, and product delivery services."
+    };
+
+    protected override void OnInitialized() => Navigation.LocationChanged += OnLocationChanged;
+    private void OnLocationChanged(object? sender, Microsoft.AspNetCore.Components.Routing.LocationChangedEventArgs args) =>
+        InvokeAsync(StateHasChanged);
+    public void Dispose() => Navigation.LocationChanged -= OnLocationChanged;
+}

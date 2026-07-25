@@ -4,19 +4,16 @@
 <MudSnackbarProvider />
 <MudDialogProvider />
 
+<SiteMetadata />
+<a class="skip-link" href="#main-content">Skip to main content</a>
 <div class="page-wrapper">
-    <CustomCursor />
-    <Preloader />
-    <AboutSidebar />
+    <AppHeader Variant="HeaderVariant.One" />
 
-    <AppHeader Variant="HeaderVariant.Three" />
+    <main id="main-content">
+        @Body
+    </main>
 
-    @Body
-
-    <AppFooter Variant="FooterVariant.Three" />
-
-    <SearchPopup />
-    <ColorSwitcher />
+    <AppFooter Variant="FooterVariant.Main" />
 </div>
 <!-- End PageWrapper -->
 

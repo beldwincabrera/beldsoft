@@ -2,18 +2,12 @@
 
 <section class="pricing-one">
     <div class="auto-container">
-        <SectionTitle Tag="Flexible Plans" Title="Choose Your Plan" Class="text-center" />
-        <div class="pricing-tabs text-center">
-            <MudToggleGroup T="bool" @bind-Value="_isYearly" Color="Color.Primary" Style="margin-bottom:2rem;">
-                <MudToggleItem Value="false" Text="Monthly" />
-                <MudToggleItem Value="true" Text="Yearly (Save 20%)" />
-            </MudToggleGroup>
-        </div>
+        <SectionTitle Tag="Flexible Engagements" Title="Choose the model that fits the outcome" Class="text-center" />
         <div class="row clearfix">
             @foreach (var plan in _plans)
             {
                 <div class="col-lg-4 col-md-6">
-                    <PricingCard Plan="plan" IsYearly="_isYearly" />
+                    <PricingCard Plan="plan" />
                 </div>
             }
         </div>
@@ -22,8 +16,6 @@
 
 @code {
     private IEnumerable<PricingPlanDto> _plans = [];
-    private bool _isYearly;
-
     protected override async Task OnInitializedAsync() =>
         _plans = await PricingSvc.GetPlansAsync();
 }

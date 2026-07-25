@@ -22,7 +22,7 @@ else
             <div class="row clearfix">
                 <div class="col-lg-6 col-md-12">
                     <div class="product-detail_image">
-                        <img src="/@(_product.Images.FirstOrDefault() ?? "")" alt="@_product.Name" />
+                        <img src="/@(_product.Images.FirstOrDefault() ?? "")" alt="@_product.Name" loading="lazy" decoding="async" />
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-12">
