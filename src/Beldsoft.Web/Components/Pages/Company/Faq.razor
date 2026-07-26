@@ -2,33 +2,25 @@
 @layout Layout.MainLayout
 @inject IFaqService FaqSvc
 
-<PageTitle>FAQ - Beldsoft</PageTitle>
+<SeoHead Title="Software Consulting FAQ | Beldsoft"
+         Description="Answers about Beldsoft software consulting engagements, modernization, integrations, applied AI, delivery, pricing, and ongoing support." Path="/faq" />
 
-<PageTitleBanner Title="Frequently Asked Questions"
-    Breadcrumbs="@(new[] { new Shared.PageTitleBanner.BreadcrumbItem("Home","/"), new Shared.PageTitleBanner.BreadcrumbItem("FAQ",null) })" />
-
-<section class="faq-section section">
-    <div class="auto-container">
-        <SectionTitle Tag="Got Questions?" Title="We Have Answers" Class="text-center" />
-        <div class="row clearfix">
-            <div class="col-lg-8 offset-lg-2">
-                <MudExpansionPanels MultiExpansion="false">
-                    @foreach (var faq in _faqs)
-                    {
-                        <MudExpansionPanel Text="@faq.Question">
-                            <p>@faq.Answer</p>
-                        </MudExpansionPanel>
-                    }
-                </MudExpansionPanels>
-            </div>
-        </div>
+<section class="page-hero"><div class="container page-hero-inner"><div><span class="eyebrow">Frequently asked questions</span><h1>What to know before starting an engagement.</h1></div><p class="lead">Straight answers about fit, process, scope, and technical delivery.</p></div></section>
+<section class="section">
+    <div class="container faq-wrap">
+        <MudExpansionPanels MultiExpansion="true">
+            @foreach (var faq in _faqs)
+            {
+                <MudExpansionPanel Text="@faq.Question">
+                    <p>@faq.Answer</p>
+                </MudExpansionPanel>
+            }
+        </MudExpansionPanels>
     </div>
 </section>
-
-<CtaSection />
+<section class="cta-band"><div class="container cta-inner"><div><span class="eyebrow">Still evaluating?</span><h2>Ask the question that matters to your business.</h2></div><a class="button button-light" href="/contact">Contact Beldsoft</a></div></section>
 
 @code {
     private IEnumerable<FaqItemDto> _faqs = [];
-    protected override async Task OnInitializedAsync() =>
-        _faqs = await FaqSvc.GetFaqItemsAsync();
+    protected override async Task OnInitializedAsync() => _faqs = await FaqSvc.GetFaqItemsAsync();
 }

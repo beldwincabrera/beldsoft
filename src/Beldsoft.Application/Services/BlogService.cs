@@ -3,89 +3,95 @@ using Beldsoft.Application.Interfaces;
 
 namespace Beldsoft.Application.Services;
 
-public class BlogService : IBlogService
+public sealed class BlogService : IBlogService
 {
-    private static readonly List<BlogPostSummaryDto> _posts =
+    private static readonly IReadOnlyList<BlogPostDto> Posts =
     [
-        new BlogPostSummaryDto
+        new()
         {
-            Id = 1, Slug = "the-future-of-ai-in-business", Title = "The Future of AI in Business",
-            Excerpt = "Artificial intelligence is reshaping how businesses operate, from automation to predictive analytics.",
-            FeaturedImage = "assets/images/resource/news-1.jpg", Author = "John Smith", AuthorImage = "assets/images/resource/author-1.jpg",
-            PublishedAt = new DateTime(2025, 3, 10), CommentCount = 4,
-            Categories = ["Technology", "AI"], Tags = ["AI", "Business", "Innovation"]
+            Id = 1,
+            Slug = "when-custom-software-makes-business-sense",
+            Title = "When custom software makes business sense",
+            Excerpt = "A practical framework for deciding whether to build, buy, integrate, or improve the process first.",
+            Author = "Beldsoft",
+            PublishedAt = new DateTime(2026, 7, 24),
+            Categories = ["Software Strategy"],
+            Tags = ["Custom Software", "Decision Framework"],
+            Content = """
+                <p>Custom software is not automatically the best answer to an inefficient process. It becomes the right investment when the way your business operates creates an advantage, the available products cannot support that work without serious compromise, or repeated manual effort is already costing more than a focused solution.</p>
+                <h2>Start with the business constraint</h2>
+                <p>Before discussing technology, define where work slows down, who is affected, how often the problem occurs, and what the current workaround costs. A useful problem statement is measurable: it describes lost time, avoidable risk, delayed revenue, poor visibility, or an experience that prevents customers or employees from completing important work.</p>
+                <h2>Compare four realistic options</h2>
+                <p>Most organizations should evaluate process improvement, an off-the-shelf product, integration between existing tools, and custom development. Improving the process is usually the least expensive option. Buying is often fastest when the workflow is standard. Integration is effective when the necessary capabilities already exist but information is fragmented. Custom software is strongest when the workflow is distinctive and materially important.</p>
+                <h2>Look beyond the initial build</h2>
+                <p>The decision must include ownership, support, security, hosting, data migration, user adoption, and future change. A smaller solution that the organization can operate confidently is more valuable than an ambitious platform that becomes difficult to maintain.</p>
+                <h2>A responsible next step</h2>
+                <p>Run a focused discovery before committing to implementation. Document the current process, desired outcome, constraints, options, and success measures. The result should be a decision and a staged roadmap—not a predetermined justification for writing code.</p>
+                """
         },
-        new BlogPostSummaryDto
+        new()
         {
-            Id = 2, Slug = "cloud-migration-best-practices", Title = "Cloud Migration Best Practices",
-            Excerpt = "Moving your infrastructure to the cloud requires careful planning and execution.",
-            FeaturedImage = "assets/images/resource/news-2.jpg", Author = "Jane Doe", AuthorImage = "assets/images/resource/author-2.jpg",
-            PublishedAt = new DateTime(2025, 3, 5), CommentCount = 7,
-            Categories = ["Cloud", "Infrastructure"], Tags = ["Cloud", "DevOps", "Migration"]
+            Id = 2,
+            Slug = "modernize-legacy-software-without-big-bang-rewrite",
+            Title = "Modernize legacy software without betting on a big-bang rewrite",
+            Excerpt = "Reduce operational risk in controlled stages while preserving the business capabilities that still work.",
+            Author = "Beldsoft",
+            PublishedAt = new DateTime(2026, 7, 17),
+            Categories = ["Modernization"],
+            Tags = ["Legacy Systems", "Architecture"],
+            Content = """
+                <p>A full rewrite can appear cleaner than improving an aging system, but it concentrates cost, uncertainty, and operational risk into one initiative. Incremental modernization creates opportunities to validate assumptions and deliver value before the entire replacement is complete.</p>
+                <h2>Assess the system before choosing the solution</h2>
+                <p>Document business-critical workflows, dependencies, data ownership, failure patterns, security concerns, release constraints, and areas where change is unusually difficult. Separate architectural problems from process, skills, or operational issues. Not every problem requires replacement.</p>
+                <h2>Stabilize what the business depends on</h2>
+                <p>Improve monitoring, backups, deployment repeatability, automated testing around critical behavior, and incident visibility. These investments reduce immediate exposure and make later modernization safer.</p>
+                <h2>Create seams for gradual change</h2>
+                <p>Introduce clear interfaces around high-value capabilities, then move or replace them one at a time. APIs, events, and well-defined data boundaries can allow old and new components to coexist while users continue working.</p>
+                <h2>Measure progress in business terms</h2>
+                <p>Track release frequency, incident impact, processing time, support effort, and the lead time required for important changes. Modernization is successful when the system becomes safer and easier to evolve—not simply when the technology stack is newer.</p>
+                """
         },
-        new BlogPostSummaryDto
+        new()
         {
-            Id = 3, Slug = "cybersecurity-trends-2025", Title = "Cybersecurity Trends for 2025",
-            Excerpt = "Stay ahead of threats with an overview of the most important cybersecurity trends this year.",
-            FeaturedImage = "assets/images/resource/news-3.jpg", Author = "Mike Johnson", AuthorImage = "assets/images/resource/author-3.jpg",
-            PublishedAt = new DateTime(2025, 2, 28), CommentCount = 12,
-            Categories = ["Security"], Tags = ["Security", "Cybersecurity", "Trends"]
-        },
-        new BlogPostSummaryDto
-        {
-            Id = 4, Slug = "building-scalable-microservices", Title = "Building Scalable Microservices",
-            Excerpt = "Microservices architecture enables teams to build and deploy independently.",
-            FeaturedImage = "assets/images/resource/news-1.jpg", Author = "Sarah Lee", AuthorImage = "assets/images/resource/author-1.jpg",
-            PublishedAt = new DateTime(2025, 2, 20), CommentCount = 3,
-            Categories = ["Architecture", "Development"], Tags = ["Microservices", ".NET", "Architecture"]
-        },
-        new BlogPostSummaryDto
-        {
-            Id = 5, Slug = "ux-design-principles", Title = "UX Design Principles for Tech Products",
-            Excerpt = "Great user experience drives adoption and reduces churn in SaaS products.",
-            FeaturedImage = "assets/images/resource/news-2.jpg", Author = "Tom Brown", AuthorImage = "assets/images/resource/author-2.jpg",
-            PublishedAt = new DateTime(2025, 2, 14), CommentCount = 8,
-            Categories = ["Design", "UX"], Tags = ["UX", "Design", "Product"]
-        },
-        new BlogPostSummaryDto
-        {
-            Id = 6, Slug = "devops-pipeline-automation", Title = "DevOps Pipeline Automation",
-            Excerpt = "Automated pipelines reduce manual errors and speed up delivery cycles.",
-            FeaturedImage = "assets/images/resource/news-3.jpg", Author = "John Smith", AuthorImage = "assets/images/resource/author-1.jpg",
-            PublishedAt = new DateTime(2025, 2, 7), CommentCount = 5,
-            Categories = ["DevOps", "Automation"], Tags = ["CI/CD", "DevOps", "Automation"]
-        },
+            Id = 3,
+            Slug = "practical-ai-automation-for-small-business",
+            Title = "A practical filter for AI and workflow automation",
+            Excerpt = "Identify useful automation opportunities without forcing AI into work that simpler technology can handle better.",
+            Author = "Beldsoft",
+            PublishedAt = new DateTime(2026, 7, 10),
+            Categories = ["Automation & AI"],
+            Tags = ["Applied AI", "Workflow Automation"],
+            Content = """
+                <p>The strongest automation opportunities are usually repetitive, high-volume, rule-guided, and connected to a clear operational outcome. AI can extend automation when the work involves unstructured text, documents, classification, or recommendations—but it also introduces uncertainty that must be managed.</p>
+                <h2>Choose the workflow before the technology</h2>
+                <p>Map the current steps, inputs, decisions, exceptions, and handoffs. Look for duplicate entry, waiting, inconsistent decisions, and information that must be copied between systems. Quantify the frequency and cost of the problem before building a solution.</p>
+                <h2>Use the simplest reliable capability</h2>
+                <p>Deterministic rules are preferable when the decision can be expressed clearly. Use AI where it contributes a capability that rules cannot provide economically, such as extracting meaning from varied documents or producing a draft for review.</p>
+                <h2>Design for review and failure</h2>
+                <p>Define confidence thresholds, human approval points, audit records, access controls, and what happens when a model or external service is unavailable. Sensitive or consequential decisions should not silently depend on an unverified output.</p>
+                <h2>Prove value with a narrow pilot</h2>
+                <p>Begin with one workflow and a limited user group. Compare time, quality, rework, and exception rates against the original process. Expand only after the evidence supports the operational and financial case.</p>
+                """
+        }
     ];
 
     public Task<IEnumerable<BlogPostSummaryDto>> GetPostsAsync(int page = 1, int pageSize = 9)
     {
-        var result = _posts.Skip((page - 1) * pageSize).Take(pageSize);
-        return Task.FromResult(result);
+        var safePage = Math.Max(1, page);
+        var safePageSize = Math.Clamp(pageSize, 1, 50);
+        return Task.FromResult<IEnumerable<BlogPostSummaryDto>>(
+            Posts.Skip((safePage - 1) * safePageSize).Take(safePageSize));
     }
 
-    public Task<BlogPostDto?> GetPostBySlugAsync(string slug)
-    {
-        var summary = _posts.FirstOrDefault(p => p.Slug == slug);
-        if (summary is null) return Task.FromResult<BlogPostDto?>(null);
-        var post = new BlogPostDto
-        {
-            Id = summary.Id, Slug = summary.Slug, Title = summary.Title,
-            Excerpt = summary.Excerpt, FeaturedImage = summary.FeaturedImage,
-            Author = summary.Author, AuthorImage = summary.AuthorImage,
-            PublishedAt = summary.PublishedAt, CommentCount = summary.CommentCount,
-            Categories = summary.Categories, Tags = summary.Tags,
-            Content = "<p>This is the full content of the blog post. It covers the topic in depth with multiple sections, examples, and insights for modern IT professionals.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>",
-            AuthorBio = "A seasoned IT professional with over 10 years of industry experience.",
-            Comments = [new BlogCommentDto { Id = 1, AuthorName = "Alex W.", AuthorImage = "assets/images/resource/author-2.jpg", Content = "Great insights! Very helpful.", PostedAt = DateTime.UtcNow.AddDays(-1) }]
-        };
-        return Task.FromResult<BlogPostDto?>(post);
-    }
+    public Task<BlogPostDto?> GetPostBySlugAsync(string slug) =>
+        Task.FromResult(Posts.FirstOrDefault(post =>
+            string.Equals(post.Slug, slug, StringComparison.OrdinalIgnoreCase)));
 
     public Task<IEnumerable<BlogPostSummaryDto>> GetRecentPostsAsync(int count = 3) =>
-        Task.FromResult(_posts.Take(count));
+        Task.FromResult<IEnumerable<BlogPostSummaryDto>>(Posts.Take(Math.Max(0, count)));
 
     public Task<IEnumerable<string>> GetCategoriesAsync() =>
-        Task.FromResult(_posts.SelectMany(p => p.Categories).Distinct());
+        Task.FromResult<IEnumerable<string>>(Posts.SelectMany(post => post.Categories).Distinct());
 
-    public Task<int> GetTotalCountAsync() => Task.FromResult(_posts.Count);
+    public Task<int> GetTotalCountAsync() => Task.FromResult(Posts.Count);
 }

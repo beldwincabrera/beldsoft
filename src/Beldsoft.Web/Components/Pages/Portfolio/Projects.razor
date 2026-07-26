@@ -1,29 +1,14 @@
 @page "/projects"
 @layout Layout.MainLayout
-@inject IProjectService ProjectSvc
 
-<PageTitle>Our Projects - Beldsoft</PageTitle>
-
-<PageTitleBanner Title="Our Projects"
-    Breadcrumbs="@(new[] { new Shared.PageTitleBanner.BreadcrumbItem("Home","/"), new Shared.PageTitleBanner.BreadcrumbItem("Projects",null) })" />
-
-<section class="projects-page section">
-    <div class="auto-container">
-        <div class="row clearfix">
-            @foreach (var proj in _projects)
-            {
-                <div class="col-lg-4 col-md-6">
-                    <ProjectCard Project="proj" />
-                </div>
-            }
-        </div>
-    </div>
-</section>
-
-<CtaSection />
-
-@code {
-    private IEnumerable<ProjectDto> _projects = [];
-    protected override async Task OnInitializedAsync() =>
-        _projects = await ProjectSvc.GetProjectsAsync();
-}
+<SeoHead Title="How Beldsoft Helps | Software Consulting Use Cases"
+         Description="See the business challenges Beldsoft addresses through custom software, modernization, integrations, automation, architecture, cloud, and DevOps." Path="/projects" />
+<section class="page-hero"><div class="container page-hero-inner"><div><span class="eyebrow">How we help</span><h1>Where focused engineering creates leverage.</h1></div><p class="lead">Representative business situations that benefit from custom software, integration, modernization, technical leadership, or responsible automation.</p></div></section>
+<section class="section"><div class="container case-list">
+    <article class="case-row"><span>01</span><div><p class="tag">Operations</p><h2>Replace a fragile spreadsheet workflow</h2><p>Design a secure business application that centralizes data, guides users through the process, records decisions, and makes status visible.</p></div><strong>Custom software · Automation · Reporting</strong></article>
+    <article class="case-row"><span>02</span><div><p class="tag">Integration</p><h2>Connect tools that create duplicate work</h2><p>Build reliable APIs and workflows that move information between systems with validation, auditability, and clear failure handling.</p></div><strong>APIs · Identity · Messaging</strong></article>
+    <article class="case-row"><span>03</span><div><p class="tag">Modernization</p><h2>Reduce risk in a business-critical legacy application</h2><p>Assess constraints, isolate high-risk areas, improve observability and testing, and modernize in controlled stages.</p></div><strong>Architecture · Cloud · Reliability</strong></article>
+    <article class="case-row"><span>04</span><div><p class="tag">Technical leadership</p><h2>Turn a product idea into an executable plan</h2><p>Define users, scope, architecture, delivery stages, quality expectations, and technical decisions before committing to a build.</p></div><strong>Discovery · Roadmap · Architecture</strong></article>
+    <article class="case-row"><span>05</span><div><p class="tag">Applied AI</p><h2>Automate a document-heavy internal process</h2><p>Evaluate whether AI adds value, prototype the workflow, add human review and guardrails, and integrate it with the existing operation.</p></div><strong>AI · Workflow · Governance</strong></article>
+</div></section>
+<section class="cta-band"><div class="container cta-inner"><div><span class="eyebrow">Your situation will be specific</span><h2>Let’s define the right outcome and next step.</h2></div><a class="button button-light" href="/contact">Discuss your challenge</a></div></section>

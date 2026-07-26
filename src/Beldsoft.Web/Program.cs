@@ -1,6 +1,7 @@
 using Beldsoft.Application.Interfaces;
 using Beldsoft.Application.Services;
 using Beldsoft.Web.Components;
+using Beldsoft.Web.Services;
 using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,7 +28,9 @@ builder.Services.AddSingleton<IFaqService, FaqService>();
 
 // Scoped services (per SignalR circuit = per user session)
 builder.Services.AddScoped<ICartService, CartService>();
-builder.Services.AddScoped<IContactService, ContactService>();
+builder.Services.Configure<ContactStorageOptions>(
+    builder.Configuration.GetSection(ContactStorageOptions.SectionName));
+builder.Services.AddSingleton<IContactService, FileContactService>();
 
 var app = builder.Build();
 

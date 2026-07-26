@@ -1,10 +1,13 @@
 @page "/pricing"
 @layout Layout.MainLayout
 
-<PageTitle>Pricing - Beldsoft</PageTitle>
-
-<PageTitleBanner Title="Pricing Plans"
-    Breadcrumbs="@(new[] { new Shared.PageTitleBanner.BreadcrumbItem("Home","/"), new Shared.PageTitleBanner.BreadcrumbItem("Pricing",null) })" />
-
-<PricingTabsSection />
-<CtaSection Title="Need a Custom Plan?" ButtonText="Talk to Sales" />
+<SeoHead Title="Engagement Models | Beldsoft"
+         Description="Learn how Beldsoft structures software consulting work through focused discovery, defined delivery, and ongoing engineering support." Path="/pricing" />
+<section class="page-hero"><div class="container page-hero-inner"><div><span class="eyebrow">Engagement models</span><h1>Clear commercial terms begin with a clear problem.</h1></div><p class="lead">Custom engineering is shaped by scope, risk, timing, and responsibilities—not generic marketing packages.</p></div></section>
+<section class="section"><div class="container card-grid card-grid-3">
+    <article class="value-card"><span class="card-number">01</span><h2>Focused discovery</h2><p>Clarify requirements, assess the current state, evaluate options, and produce an actionable recommendation or roadmap.</p></article>
+    <article class="value-card"><span class="card-number">02</span><h2>Defined delivery</h2><p>Implement an agreed scope with explicit deliverables, assumptions, milestones, responsibilities, and acceptance criteria.</p></article>
+    <article class="value-card"><span class="card-number">03</span><h2>Ongoing engineering</h2><p>Provide planned capacity for maintenance, improvements, architecture guidance, and technical support under agreed service terms.</p></article>
+</div></section>
+<section class="section section-muted"><div class="container narrow prose"><span class="eyebrow">What shapes the proposal</span><h2>Pricing should reflect the work—not a marketing tier.</h2><ul class="check-list"><li>Business outcome and required capabilities</li><li>Current-system complexity and integration dependencies</li><li>Security, compliance, reliability, and performance needs</li><li>Delivery timeline, team responsibilities, and level of uncertainty</li><li>Support, documentation, and operational handoff requirements</li></ul></div></section>
+<section class="cta-band"><div class="container cta-inner"><div><span class="eyebrow">Get a relevant estimate</span><h2>Start with a focused consultation.</h2></div><a class="button button-light" href="/contact">Discuss your project</a></div></section>

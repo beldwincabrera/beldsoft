@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /Error
+Disallow: /404
+
+Sitemap: https://beldsoft.com/sitemap.xml
