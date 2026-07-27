@@ -1,0 +1,42 @@
+.leadership-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+    gap: 1.5rem;
+}
+
+.leadership-profile {
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
+}
+
+.leadership-profile > img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    background: var(--surface-soft);
+}
+
+.leadership-profile-copy {
+    padding: clamp(1.4rem, 3vw, 2rem);
+}
+
+.leadership-profile-copy h3 {
+    margin-bottom: .3rem;
+}
+
+.leadership-title {
+    margin-bottom: 1rem;
+    color: var(--primary);
+    font-size: .82rem;
+    font-weight: 800;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+}
+
+.leadership-profile-copy p:last-child {
+    margin-bottom: 0;
+}

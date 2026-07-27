@@ -4,24 +4,16 @@
 <MudSnackbarProvider />
 <MudDialogProvider />
 
-<div class="page-wrapper">
-    <CustomCursor />
-    <Preloader />
-    <AboutSidebar />
-
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<div class="site-shell">
     <AppHeader Variant="HeaderVariant.One" />
-
-    @Body
-
+    <main id="main-content" tabindex="-1">
+        @Body
+    </main>
     <AppFooter Variant="FooterVariant.Main" />
-
-    <SearchPopup />
-    <ColorSwitcher />
 </div>
-<!-- End PageWrapper -->
 
 <div id="blazor-error-ui" data-nosnippet>
-    An unhandled error has occurred.
-    <a href="." class="reload">Reload</a>
-    <span class="dismiss">&#10006;</span>
+    Something went wrong. <a href=".">Reload the page</a>
+    <button class="dismiss" type="button" aria-label="Dismiss">×</button>
 </div>

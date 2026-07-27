@@ -1,0 +1,35 @@
+@page "/blog-classic"
+@page "/shop"
+@page "/shop/{LegacySlug}"
+@page "/cart"
+@page "/checkout"
+@page "/register"
+@page "/team"
+@page "/team/{LegacySlug}"
+@page "/testimonials"
+@page "/contact-2"
+@page "/coming-soon"
+@page "/projects/{LegacySlug}"
+@layout Layout.MainLayout
+@inject NavigationManager Navigation
+
+<SeoHead Title="Page Moved | Beldsoft" Description="This page has moved to the current Beldsoft website." NoIndex="true" />
+<section class="page-hero"><div class="container narrow"><span class="eyebrow">Page moved</span><h1>Taking you to the current information.</h1><p><a class="text-link" href="@Destination">Continue <span aria-hidden="true">→</span></a></p></div></section>
+
+@code {
+    [Parameter] public string? LegacySlug { get; set; }
+    private string Destination => Navigation.ToBaseRelativePath(Navigation.Uri).Split('/')[0] switch
+    {
+        "blog" => "/blog",
+        "shop" or "cart" or "checkout" or "register" => "/services",
+        "team" or "testimonials" => "/about",
+        "contact-2" => "/contact",
+        "projects" => "/projects",
+        _ => "/"
+    };
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender) Navigation.NavigateTo(Destination, replace: true);
+    }
+}

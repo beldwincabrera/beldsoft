@@ -2,28 +2,80 @@
 @layout Layout.MainLayout
 @inject IServiceService ServiceSvc
 
-<PageTitle>Our Services - Beldsoft</PageTitle>
+<SeoHead Title="Software Engineering Services | Beldsoft"
+         Description="Explore Beldsoft services for custom software, modernization, architecture, integrations, workflow automation, applied AI, cloud, and DevOps." Path="/services" />
 
-<PageTitleBanner Title="Our Services"
-    Breadcrumbs="@(new[] { new Shared.PageTitleBanner.BreadcrumbItem("Home","/"), new Shared.PageTitleBanner.BreadcrumbItem("Services",null) })" />
+<section class="page-hero">
+    <div class="container page-hero-inner page-hero-stacked">
+        <div>
+            <span class="eyebrow">Services</span>
+            <h1>Software engineering built around business outcomes.</h1>
+        </div>
+        <p class="lead">From a difficult technical decision to a complete business application, Beldsoft provides focused expertise and a practical path forward.</p>
+    </div>
+</section>
 
-<section class="services-page section">
-    <div class="auto-container">
-        <div class="row clearfix">
-            @foreach (var svc in _services)
+<section class="section">
+    <div class="container">
+        <div class="section-heading section-heading-wide">
+            <span class="eyebrow">Capabilities</span>
+            <h2>Start with the constraint that matters most.</h2>
+            <p>Services can stand alone or combine into a staged engagement. Discovery establishes the right scope, dependencies, responsibilities, and measures of success before delivery begins.</p>
+        </div>
+        <div class="services-grid">
+            @foreach (var service in _services)
             {
-                <div class="col-lg-4 col-md-6">
-                    <ServiceCard Service="svc" />
-                </div>
+                <article class="service-feature-card">
+                    <div class="service-feature-top"><span class="card-number">@service.Id.ToString("00")</span><span class="service-category">@GetCategory(service.Id)</span></div>
+                    <h2><a href="/services/@service.Slug">@service.Title</a></h2>
+                    <p>@service.ShortDescription</p>
+                    <ul class="mini-list" aria-label="@($"{service.Title} capabilities")">
+                        @foreach (var feature in service.Features.Take(3))
+                        {
+                            <li>@feature</li>
+                        }
+                    </ul>
+                    <a class="text-link" href="/services/@service.Slug" aria-label="Explore @service.Title">Explore service <span aria-hidden="true">→</span></a>
+                </article>
             }
         </div>
     </div>
 </section>
 
-<CtaSection />
+<section class="section section-muted">
+    <div class="container section-flow">
+        <div class="section-heading section-heading-wide">
+            <span class="eyebrow">Choosing where to begin</span>
+            <h2>You do not need a fully formed technical specification.</h2>
+        </div>
+        <div class="prose readable-copy">
+            <p>A useful first conversation identifies what is happening today, who is affected, which systems or processes are involved, and what a better outcome would mean for the business.</p>
+            <p>From there, Beldsoft can recommend a focused assessment, a defined implementation, or ongoing engineering support.</p>
+            <a class="text-link" href="/pricing">Review engagement models <span aria-hidden="true">→</span></a>
+        </div>
+    </div>
+</section>
+
+<section class="cta-band">
+    <div class="container cta-inner">
+        <div>
+            <span class="eyebrow">Not sure which service fits?</span>
+            <h2>Start with the problem, not a package.</h2>
+        </div>
+        <a class="button button-light" href="/contact">Discuss your needs</a>
+    </div>
+</section>
 
 @code {
     private IEnumerable<ServiceDto> _services = [];
-    protected override async Task OnInitializedAsync() =>
-        _services = await ServiceSvc.GetServicesAsync();
+    private static string GetCategory(int id) => id switch
+    {
+        1 => "Build",
+        2 => "Improve",
+        3 => "Guide",
+        4 => "Connect",
+        5 => "Automate",
+        _ => "Operate"
+    };
+    protected override async Task OnInitializedAsync() => _services = await ServiceSvc.GetServicesAsync();
 }

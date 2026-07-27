@@ -1,61 +1,109 @@
 @page "/services/{Slug}"
 @layout Layout.MainLayout
 @inject IServiceService ServiceSvc
-@inject NavigationManager Nav
 
-<PageTitle>@(_service?.Title ?? "Service") - Beldsoft</PageTitle>
+<SeoHead Title="@Title" Description="@Description" Path="@($"/services/{Slug}")" NoIndex="@(_service is null)" />
 
 @if (_service is null)
 {
-    <PageTitleBanner Title="Service Not Found"
-        Breadcrumbs="@(new[] { new Shared.PageTitleBanner.BreadcrumbItem("Home","/"), new Shared.PageTitleBanner.BreadcrumbItem("Services","/services") })" />
-    <section class="section"><div class="auto-container"><p>Service not found.</p></div></section>
+    <section class="page-hero"><div class="container narrow"><span class="eyebrow">Service not found</span><h1>We could not find that service.</h1><p><a class="text-link" href="/services">View all services <span aria-hidden="true">→</span></a></p></div></section>
 }
 else
 {
-    <PageTitleBanner Title="@_service.Title"
-        Breadcrumbs="@(new[] { new Shared.PageTitleBanner.BreadcrumbItem("Home","/"), new Shared.PageTitleBanner.BreadcrumbItem("Services","/services"), new Shared.PageTitleBanner.BreadcrumbItem(_service.Title,null) })" />
-
-    <section class="service-detail section">
-        <div class="auto-container">
-            <div class="row clearfix">
-                <div class="col-lg-8 col-md-12">
-                    <div class="service-detail_image">
-                        <img src="/@_service.Image" alt="@_service.Title" />
-                    </div>
-                    <h2>@_service.Title</h2>
-                    <p>@_service.Description</p>
-                    @if (_service.Features.Any())
-                    {
-                        <h4>Key Features</h4>
-                        <ul class="service-features">
-                            @foreach (var f in _service.Features)
-                            {
-                                <li><span class="fa-solid fa-check"></span> @f</li>
-                            }
-                        </ul>
-                    }
-                </div>
-                <div class="col-lg-4 col-md-12">
-                    <div class="service-sidebar">
-                        <div class="sidebar-widget">
-                            <h4>All Services</h4>
-                            <ul class="service-list">
-                                @foreach (var svc in _allServices)
-                                {
-                                    <li class="@(svc.Slug == Slug ? "active" : "")">
-                                        <a href="/services/@svc.Slug">@svc.Title</a>
-                                    </li>
-                                }
-                            </ul>
-                        </div>
-                        <div class="sidebar-cta">
-                            <h4>Need Help?</h4>
-                            <a href="/contact" class="theme-btn btn-style-one"><span class="btn-title">Contact Us</span></a>
-                        </div>
-                    </div>
-                </div>
+    <section class="page-hero service-hero">
+        <div class="container page-hero-inner page-hero-stacked">
+            <div>
+                <a class="back-link" href="/services">← All services</a>
+                <span class="eyebrow">Consulting service</span>
+                <h1>@_service.Title</h1>
             </div>
+            <div class="hero-support">
+                <p class="lead">@_service.ShortDescription</p>
+                <a class="button" href="/contact?service=@_service.Slug">Discuss this service</a>
+            </div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="container">
+            <div class="section-heading section-heading-wide">
+                <span class="eyebrow">What this service does</span>
+                <h2>@OverviewHeading</h2>
+            </div>
+            <div class="detail-grid">
+                <div class="prose service-overview">
+                    <p>@_service.Description</p>
+                    <p>@OutcomeCopy</p>
+                </div>
+                <aside class="feature-panel">
+                    <span class="panel-label">Typical capabilities</span>
+                    <h2>What the work may include</h2>
+                    <ul class="check-list">
+                        @foreach (var feature in _service.Features)
+                        {
+                            <li>@feature</li>
+                        }
+                    </ul>
+                    <p class="small">The exact scope is defined after discovery and documented in the engagement proposal.</p>
+                </aside>
+            </div>
+        </div>
+    </section>
+    <section class="section section-muted">
+        <div class="container">
+            <div class="section-heading section-heading-wide">
+                <span class="eyebrow">A practical engagement</span>
+                <h2>Clear decisions at every stage.</h2>
+                <p>The approach is adapted to the service, but the work remains transparent, reviewable, and tied to an agreed business outcome.</p>
+            </div>
+            <div class="delivery-steps">
+                <article>
+                    <span>01</span>
+                    <div>
+                        <h3>Clarify the current state</h3>
+                        <p>Understand users, workflows, systems, dependencies, risks, and success criteria.</p>
+                    </div>
+                </article>
+                <article>
+                    <span>02</span>
+                    <div>
+                        <h3>Shape the right response</h3>
+                        <p>Evaluate options, make tradeoffs explicit, and sequence work by value and risk.</p>
+                    </div>
+                </article>
+                <article>
+                    <span>03</span>
+                    <div>
+                        <h3>Deliver in visible increments</h3>
+                        <p>Implement, validate, document, and prepare the solution for responsible operation.</p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="container section-flow">
+            <div class="section-heading section-heading-wide">
+                <span class="eyebrow">Good fit indicators</span>
+                <h2>When to consider this service.</h2>
+            </div>
+            <div class="fit-list content-wide">
+                @foreach (var item in FitIndicators)
+                {
+                    <div>
+                        <span aria-hidden="true">✓</span>
+                        <p>@item</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+    <section class="cta-band">
+        <div class="container cta-inner">
+            <div>
+                <span class="eyebrow">Next step</span>
+                <h2>Tell us what is getting in the way.</h2>
+            </div>
+            <a class="button button-light" href="/contact?service=@_service.Slug">Request a consultation</a>
         </div>
     </section>
 }
@@ -63,11 +111,34 @@ else
 @code {
     [Parameter] public string Slug { get; set; } = string.Empty;
     private ServiceDto? _service;
-    private IEnumerable<ServiceDto> _allServices = [];
-
-    protected override async Task OnInitializedAsync()
+    private string Title => _service is null ? "Service Not Found | Beldsoft" : $"{_service.Title} | Beldsoft";
+    private string Description => _service?.ShortDescription ?? "The requested Beldsoft service could not be found.";
+    private string OverviewHeading => Slug switch
     {
-        _allServices = await ServiceSvc.GetServicesAsync();
-        _service = await ServiceSvc.GetServiceBySlugAsync(Slug);
-    }
+        "custom-software-development" => "Build around the work that makes your business distinct.",
+        "software-modernization" => "Improve critical software without creating unnecessary disruption.",
+        "architecture-technical-leadership" => "Turn consequential technical choices into a clear plan.",
+        "apis-systems-integration" => "Make systems and data work together reliably.",
+        "workflow-automation-ai" => "Remove repetitive work with the right level of automation.",
+        _ => "Create a more dependable path from change to production."
+    };
+    private string OutcomeCopy => Slug switch
+    {
+        "custom-software-development" => "The result is software shaped around real users and operations, with a clear foundation for support and future change.",
+        "software-modernization" => "The result is a staged improvement plan that balances immediate business continuity with long-term maintainability.",
+        "architecture-technical-leadership" => "The result is greater decision clarity, visible delivery risk, and an architecture the team can understand and evolve.",
+        "apis-systems-integration" => "The result is less duplicate effort, stronger data consistency, and integrations that can be monitored and supported.",
+        "workflow-automation-ai" => "The result is a controlled workflow that saves effort while keeping people responsible for consequential decisions.",
+        _ => "The result is a delivery and operating model that improves release confidence, visibility, and resilience."
+    };
+    private string[] FitIndicators => Slug switch
+    {
+        "custom-software-development" => ["Generic products force critical work into awkward workarounds.", "Manual processes limit capacity, visibility, or customer experience.", "A new digital capability is central to the business strategy."],
+        "software-modernization" => ["Important changes take too long or introduce disproportionate risk.", "Aging technology creates security, reliability, or support concerns.", "The business cannot pause operations for a complete replacement."],
+        "architecture-technical-leadership" => ["A major initiative needs senior technical direction before delivery begins.", "Teams need alignment on boundaries, tradeoffs, or a modernization path.", "Leadership needs an independent assessment of technical risk."],
+        "apis-systems-integration" => ["People re-enter the same information across multiple tools.", "Important workflows fail silently between systems.", "Partners or applications need secure, well-governed access to data."],
+        "workflow-automation-ai" => ["High-volume repetitive work consumes skilled employee time.", "Document or information handling creates delays and inconsistency.", "AI is being considered, but the business case and controls are unclear."],
+        _ => ["Releases are manual, inconsistent, or difficult to recover.", "Teams lack useful visibility into application health and failures.", "Cloud cost, scalability, or operational ownership needs attention."]
+    };
+    protected override async Task OnParametersSetAsync() => _service = await ServiceSvc.GetServiceBySlugAsync(Slug);
 }

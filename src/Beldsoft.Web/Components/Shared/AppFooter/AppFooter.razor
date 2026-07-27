@@ -1,15 +1,4 @@
-@if (Variant == FooterVariant.Main)
-{
-    <FooterMain />
-}
-else if (Variant == FooterVariant.Two)
-{
-    <FooterTwo />
-}
-else
-{
-    <FooterThree />
-}
+<FooterMain />
 
 @code {
     [Parameter] public FooterVariant Variant { get; set; } = FooterVariant.Main;

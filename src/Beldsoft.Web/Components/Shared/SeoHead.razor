@@ -1,0 +1,29 @@
+@inject NavigationManager Navigation
+
+<PageTitle>@Title</PageTitle>
+<HeadContent>
+    <meta name="description" content="@Description" />
+    <link rel="canonical" href="@CanonicalUrl" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Beldsoft" />
+    <meta property="og:title" content="@Title" />
+    <meta property="og:description" content="@Description" />
+    <meta property="og:url" content="@CanonicalUrl" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="@Title" />
+    <meta name="twitter:description" content="@Description" />
+    @if (NoIndex)
+    {
+        <meta name="robots" content="noindex, nofollow" />
+    }
+</HeadContent>
+
+@code {
+    [Parameter, EditorRequired] public string Title { get; set; } = string.Empty;
+    [Parameter, EditorRequired] public string Description { get; set; } = string.Empty;
+    [Parameter] public string? Path { get; set; }
+    [Parameter] public bool NoIndex { get; set; }
+
+    private string CanonicalUrl =>
+        new Uri(new Uri(Navigation.BaseUri), (Path ?? Navigation.ToBaseRelativePath(Navigation.Uri)).TrimStart('/')).ToString();
+}

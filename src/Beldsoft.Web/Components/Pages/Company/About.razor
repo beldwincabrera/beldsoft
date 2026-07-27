@@ -1,13 +1,76 @@
 @page "/about"
 @layout Layout.MainLayout
+@using Beldsoft.Web.Components.Shared.Credibility
+@using Beldsoft.Web.Models.Credibility
 
-<PageTitle>About Us - Beldsoft</PageTitle>
+<SeoHead Title="About Beldsoft | Practical Technology Consulting"
+         Description="Learn how Beldsoft approaches software engineering and technology consulting for small and medium-sized businesses." Path="/about" />
 
-<PageTitleBanner Title="About Us"
-    Breadcrumbs="@(new[] { new Shared.PageTitleBanner.BreadcrumbItem("Home","/"), new Shared.PageTitleBanner.BreadcrumbItem("About",null) })" />
+<section class="page-hero">
+    <div class="container page-hero-inner page-hero-stacked">
+        <div>
+            <span class="eyebrow">About Beldsoft</span>
+            <h1>Technical depth, translated into practical decisions.</h1>
+        </div>
+        <p class="lead">Beldsoft helps growing organizations use software as an advantage—not inherit more complexity, cost, or risk.</p>
+    </div>
+</section>
 
-<AboutSection />
-<ServicesSection />
-<TeamSection />
-<TestimonialsSection />
-<CtaSection />
+<section class="section">
+    <div class="container section-flow">
+        <div class="section-heading section-heading-wide">
+            <span class="eyebrow">Our purpose</span>
+            <h2>Make experienced software engineering accessible to businesses that need results.</h2>
+        </div>
+        <div class="prose readable-copy">
+            <p>Small and medium-sized organizations often reach a point where generic software, disconnected tools, or aging applications begin to constrain the business. The problem is rarely solved by adding technology without a plan.</p>
+            <p>Beldsoft brings architecture, engineering, integration, automation, and delivery thinking together. We begin with the business outcome, make tradeoffs explicit, and build solutions that the organization can understand and sustain.</p>
+        </div>
+    </div>
+</section>
+
+<section class="section section-muted">
+    <div class="container">
+        <div class="section-heading section-heading-wide">
+            <span class="eyebrow">Working principles</span>
+            <h2>What clients should expect from the engagement.</h2>
+        </div>
+        <div class="card-grid card-grid-3">
+            <article class="value-card"><h3>Business context first</h3><p>Technology decisions are tied to users, operations, risk, and the outcome that matters.</p></article>
+            <article class="value-card"><h3>Plain-spoken advice</h3><p>Options and tradeoffs are explained clearly so decision-makers can act with confidence.</p></article>
+            <article class="value-card"><h3>Responsible delivery</h3><p>Security, quality, maintainability, and operational ownership are considered from the start.</p></article>
+            <article class="value-card"><h3>Incremental progress</h3><p>Work is shaped into reviewable stages that reduce uncertainty and expose value sooner.</p></article>
+            <article class="value-card"><h3>Fit over fashion</h3><p>Tools are selected because they suit the problem—not because they are currently popular.</p></article>
+            <article class="value-card"><h3>Honest boundaries</h3><p>Assumptions, dependencies, unknowns, and risks are made visible before they become surprises.</p></article>
+        </div>
+    </div>
+</section>
+
+<LeadershipSection Members="@LeadershipProfiles"
+                   Introduction="Meet the people responsible for Beldsoft's technical direction and client outcomes." />
+
+<section class="cta-band">
+    <div class="container cta-inner">
+        <div>
+            <span class="eyebrow">A capable extension of your team</span>
+            <h2>Bring structure to your next software decision.</h2>
+        </div>
+        <a class="button button-light" href="/contact">Request a consultation</a>
+    </div>
+</section>
+
+@code {
+    private static readonly IReadOnlyList<LeadershipProfile> LeadershipProfiles =
+    [
+        // TODO(BUSINESS): Replace every field with an approved leader photo, name, title,
+        // and biography. Keep IsApprovedForPublication false until the business confirms
+        // that the complete profile may appear publicly. Unapproved/TODO profiles render no HTML.
+        new(
+            PhotoPath: "TODO: approved leadership photo path",
+            PhotoAlternativeText: "TODO: meaningful description of the leadership photo",
+            Name: "TODO: leadership name",
+            Title: "TODO: leadership title",
+            Biography: "TODO: short, approved leadership biography",
+            IsApprovedForPublication: false)
+    ];
+}

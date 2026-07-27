@@ -1,0 +1,71 @@
+name: CD
+
+# ──────────────────────────────────────────────────────────────────────────────
+# CD IS CURRENTLY DISABLED — automatic deployment is intentionally not wired up.
+#
+# To enable CD when ready to deploy to Azure:
+#   1. Provision an Azure App Service (Linux, .NET 9 runtime).
+#   2. Download the Publish Profile from the App Service's Overview blade.
+#   3. Add the following GitHub repository secrets:
+#        AZURE_WEBAPP_NAME           → your App Service name (e.g. beldsoft-web)
+#        AZURE_WEBAPP_PUBLISH_PROFILE → paste the full publish profile XML
+#   4. Change the `on:` trigger below from `workflow_dispatch` only to:
+#        push:
+#          branches: [ main, develop ]
+#      (and remove or keep the workflow_dispatch entry as you prefer)
+# ──────────────────────────────────────────────────────────────────────────────
+
+on:
+  # Manual trigger only — automatic deployment is disabled until Azure is ready
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Target environment'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+          - production
+          - staging
+
+env:
+  AZURE_WEBAPP_NAME: ${{ secrets.AZURE_WEBAPP_NAME }}
+  DOTNET_VERSION: '9.0.x'
+
+jobs:
+  deploy:
+    name: Deploy to Azure App Service
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ github.event.inputs.environment }}
+      url: ${{ steps.deploy.outputs.webapp-url }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 9
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Restore dependencies
+        run: dotnet restore Beldsoft.sln
+
+      - name: Build
+        run: dotnet build Beldsoft.sln --no-restore --configuration Release
+
+      - name: Publish
+        run: >
+          dotnet publish src/Beldsoft.Web/Beldsoft.Web.csproj
+          --no-build
+          --configuration Release
+          --output ./publish
+
+      - name: Deploy to Azure Web App
+        id: deploy
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: ./publish

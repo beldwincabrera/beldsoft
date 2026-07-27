@@ -3,19 +3,52 @@ using Beldsoft.Application.Interfaces;
 
 namespace Beldsoft.Application.Services;
 
-public class ServiceService : IServiceService
+public sealed class ServiceService : IServiceService
 {
-    private static readonly List<ServiceDto> _services =
+    private static readonly IReadOnlyList<ServiceDto> Services =
     [
-        new ServiceDto { Id = 1, Slug = "web-development", Title = "Web Development", ShortDescription = "Custom web applications built with modern technologies.", Icon = "fa-solid fa-globe", Image = "assets/images/resource/service-1.jpg", Features = ["Responsive Design", "Performance Optimized", "SEO Ready", "Cross-Browser Compatible"] },
-        new ServiceDto { Id = 2, Slug = "mobile-apps", Title = "Mobile Applications", ShortDescription = "Native and cross-platform mobile apps for iOS and Android.", Icon = "fa-solid fa-mobile-screen", Image = "assets/images/resource/service-2.jpg", Features = ["iOS & Android", "Cross-Platform", "Offline Support", "Push Notifications"] },
-        new ServiceDto { Id = 3, Slug = "cloud-solutions", Title = "Cloud Solutions", ShortDescription = "Scalable cloud infrastructure and migration services.", Icon = "fa-solid fa-cloud", Image = "assets/images/resource/service-3.jpg", Features = ["AWS & Azure", "Auto-Scaling", "Cost Optimization", "24/7 Monitoring"] },
-        new ServiceDto { Id = 4, Slug = "cybersecurity", Title = "Cybersecurity", ShortDescription = "Comprehensive security audits and protection strategies.", Icon = "fa-solid fa-shield-halved", Image = "assets/images/resource/service-1.jpg", Features = ["Penetration Testing", "Compliance Audits", "Incident Response", "Security Training"] },
-        new ServiceDto { Id = 5, Slug = "ai-solutions", Title = "AI & Machine Learning", ShortDescription = "Intelligent automation and data-driven insights.", Icon = "fa-solid fa-brain", Image = "assets/images/resource/service-2.jpg", Features = ["Predictive Analytics", "NLP Solutions", "Computer Vision", "Model Training"] },
-        new ServiceDto { Id = 6, Slug = "it-consulting", Title = "IT Consulting", ShortDescription = "Strategic technology guidance for your business goals.", Icon = "fa-solid fa-handshake", Image = "assets/images/resource/service-3.jpg", Features = ["Digital Strategy", "Technology Roadmap", "Vendor Selection", "Risk Assessment"] },
+        new() {
+            Id = 1, Slug = "custom-software-development", Title = "Custom Software Development",
+            ShortDescription = "Purpose-built web and business applications that replace manual work and fit the way your organization operates.",
+            Description = "We design and build maintainable software around your workflows, users, and business goals. Engagements can cover discovery, architecture, implementation, testing, deployment, and handoff.",
+            Icon = "code", Features = ["Business and web applications", "Responsive user experiences", "API and data integration", "Testing and deployment readiness"]
+        },
+        new() {
+            Id = 2, Slug = "software-modernization", Title = "Software Modernization",
+            ShortDescription = "Reduce the cost and risk of aging applications without disrupting the business they support.",
+            Description = "We assess legacy systems, identify high-value improvements, and modernize in practical stages. The goal is a safer, faster, and more supportable platform—not change for its own sake.",
+            Icon = "refresh", Features = ["Application and architecture assessment", "Incremental modernization roadmap", "Performance and reliability improvements", "Cloud-readiness planning"]
+        },
+        new() {
+            Id = 3, Slug = "architecture-technical-leadership", Title = "Architecture & Technical Leadership",
+            ShortDescription = "Senior technical direction for important decisions, complex initiatives, and growing engineering teams.",
+            Description = "Beldsoft helps translate business priorities into sound technical plans. We clarify tradeoffs, reduce delivery risk, and establish an architecture your team can operate and evolve.",
+            Icon = "architecture", Features = ["Solution and integration architecture", "Technical discovery and roadmaps", "Delivery-risk assessment", "Fractional technology leadership"]
+        },
+        new() {
+            Id = 4, Slug = "apis-systems-integration", Title = "APIs & Systems Integration",
+            ShortDescription = "Connect disconnected tools and data so information moves securely and work stops falling between systems.",
+            Description = "We design APIs and integrations that make critical systems work together. Solutions emphasize clear contracts, secure access, observability, and resilient failure handling.",
+            Icon = "link", Features = ["REST API design and development", "Third-party platform integration", "Identity and access integration", "Reliable messaging and workflow orchestration"]
+        },
+        new() {
+            Id = 5, Slug = "workflow-automation-ai", Title = "Workflow Automation & Applied AI",
+            ShortDescription = "Use automation and AI where they can remove repetitive effort, shorten cycle time, or improve decisions.",
+            Description = "We identify practical opportunities, validate the business case, and build human-centered automation with appropriate controls. AI is treated as a capability—not a promise.",
+            Icon = "automation", Features = ["Process discovery and automation", "AI-assisted internal workflows", "Human review and guardrails", "Integration with existing business systems"]
+        },
+        new() {
+            Id = 6, Slug = "cloud-devops-reliability", Title = "Cloud, DevOps & Reliability",
+            ShortDescription = "Make software easier to release, observe, scale, and support with disciplined cloud and delivery practices.",
+            Description = "We improve deployment pipelines, runtime visibility, operational resilience, and cloud architecture so teams can ship changes with greater confidence.",
+            Icon = "cloud", Features = ["Cloud architecture and migration planning", "CI/CD and release automation", "Monitoring and operational visibility", "Performance and resilience engineering"]
+        }
     ];
 
-    public Task<IEnumerable<ServiceDto>> GetServicesAsync() => Task.FromResult<IEnumerable<ServiceDto>>(_services);
+    public Task<IEnumerable<ServiceDto>> GetServicesAsync() =>
+        Task.FromResult<IEnumerable<ServiceDto>>(Services);
+
     public Task<ServiceDto?> GetServiceBySlugAsync(string slug) =>
-        Task.FromResult(_services.FirstOrDefault(s => s.Slug == slug));
+        Task.FromResult(Services.FirstOrDefault(service =>
+            string.Equals(service.Slug, slug, StringComparison.OrdinalIgnoreCase)));
 }
