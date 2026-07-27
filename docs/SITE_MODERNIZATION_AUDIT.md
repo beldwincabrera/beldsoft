@@ -89,21 +89,27 @@ The modernized site now positions Beldsoft as a practical software engineering a
 2. The user supplies name, organization, email, optional phone, service interest, contact preference, project description, and privacy acknowledgement.
 3. A hidden honeypot rejects simple bot submissions.
 4. The server applies the same model validation, limits attempts per normalized-email hash, and rejects duplicate message fingerprints within the configured window.
-5. Accepted requests are serialized as one JSON record per line under the configured server directory, partitioned by month.
-6. The service logs only the generated submission ID. It does not log lead details.
-7. The user sees success only after the record has been written. Storage, validation, spam, and unexpected failures return an error state.
+5. Accepted requests are written as individual JSON records under a private `pending` directory.
+6. Non-production environments atomically write a `.eml` notification to the local drop folder; Production submits the notification through Microsoft Graph.
+7. Successful notification handoff moves the Lead record into a monthly `accepted` directory. This means the local drop or Graph accepted it, not that a recipient's mailbox received it. Failures leave the recoverable record in `pending`.
+8. The service logs only generated Lead IDs and delivery-channel status. It does not log Lead details, access tokens, or credentials.
 
 ### Production configuration
 
-Configuration section: `ContactStorage`
+Configuration section: `Leads`
 
 | Setting | Default | Production guidance |
 |---|---|---|
-| `Directory` | `App_Data/contact-submissions` | Mount an encrypted, durable, access-controlled volume outside the deployed application package |
+| `StorageDirectory` | `App_Data/leads` | Mount an encrypted, durable, access-controlled volume outside the deployed application package |
+| `LocalEmailDropDirectory` | `App_Data/lead-email-drop` | Non-production-only private `.eml` outbox; never place beneath `wwwroot` |
 | `DuplicateWindowMinutes` | `10` | Adjust only after observing legitimate retry behavior |
 | `MaximumSubmissionsPerHour` | `5` | Tune with infrastructure-level rate limiting and monitoring |
+| `RecipientAddress` | `beldwin@beldsoft.com` | Internal mailbox that receives every accepted Lead |
+| `Graph:TenantId`, `Graph:ClientId` | empty | Configure the Microsoft Entra application in the production environment |
+| `Graph:ClientSecret` | empty | Supply only through protected production secret configuration |
+| `Graph:SenderUserId` | empty | Exchange Online mailbox UPN or user ID used by Graph `sendMail` |
 
-No secret is required for the provider-neutral file sink. Before launch, choose and implement the internal notification mechanism (transactional email, CRM, queue, or monitored workflow) and define a retention/deletion policy. The current implementation reliably accepts and stores the request but intentionally does not pretend an external notification or acknowledgment email is configured.
+Only the Production environment can send a real notification. Every other environment writes a private `.eml` file locally. Production requires an Exchange Online sender mailbox, app-only Microsoft Graph authorization, protected credentials, and preferably mailbox-scoped Exchange Online RBAC. Do not retain an unscoped Entra `Mail.Send` application grant when using scoped Exchange RBAC because the permission models are additive. Configure the documented `Leads__*` environment variables and define retention/deletion policies before launch.
 
 ## SEO by page
 
@@ -153,7 +159,7 @@ Then render every sitemap route at the target widths, verify the browser console
 
 ## Remaining decisions, prioritized
 
-1. **Production lead notification and retention:** Select email, CRM, queue, or workflow provider; implement internal notification; define retention and deletion.
+1. **Production Lead email and retention:** Provision the Exchange Online sender mailbox and mailbox-scoped Exchange RBAC role without an additional unscoped Entra `Mail.Send` grant, configure the documented `Leads__Graph__*` environment variables, mount durable storage, and define retention/deletion.
 2. **Legal review:** Confirm legal entity, jurisdiction, service providers, privacy rights, retention, governing law, venue, warranties, and liability language.
 3. **Verified trust content:** Supply approved founder/leadership information, verifiable credentials, client references, or case studies before adding them.
 4. **Company facts:** Confirm operating location, service area, phone number, business hours, and official social profiles before publishing them.

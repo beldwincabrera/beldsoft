@@ -4,16 +4,11 @@
 <MudSnackbarProvider />
 <MudDialogProvider />
 
+<a class="skip-link" href="#main-content">Skip to main content</a>
 <div class="page-wrapper">
-    <Preloader />
-    <CustomCursor />
-
-    <AppHeader Variant="HeaderVariant.Three" />
-
-    @Body
-
-    <AppFooter Variant="FooterVariant.Three" />
-    <BackToTop />
+    <AppHeader />
+    <main id="main-content">@Body</main>
+    <AppFooter />
 </div>
 
 <div id="blazor-error-ui" data-nosnippet>

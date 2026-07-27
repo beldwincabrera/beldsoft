@@ -6,34 +6,67 @@
          Description="Beldsoft helps small and medium-sized businesses design, build, modernize, integrate, and operate practical business software." Path="/" />
 <HeadContent>
     <script type="application/ld+json">@((MarkupString)OrganizationSchema)</script>
+    <link rel="preload" as="image" href="/assets/images/main-slider/1.jpg" fetchpriority="high" />
 </HeadContent>
 
-<section class="hero">
-    <div class="container hero-grid">
-        <div>
-            <span class="eyebrow">Software engineering for growing businesses</span>
-            <h1>Turn operational friction into software that works for your business.</h1>
-            <p class="lead">Beldsoft helps small and medium-sized organizations design, build, modernize, and integrate business software—without the overhead of a full internal engineering department.</p>
-            <div class="button-row">
-                <a class="button" href="/contact">Request a consultation</a>
-                <a class="text-link" href="/services">Explore our services <span aria-hidden="true">→</span></a>
-            </div>
-            <ul class="trust-list" aria-label="What to expect">
-                <li>Business-first discovery</li><li>Senior technical guidance</li><li>Maintainable delivery</li>
-            </ul>
-        </div>
-        <div class="hero-visual" aria-label="From business challenge to reliable software">
-            <div class="signal-card signal-card-main">
-                <span class="signal-label">Your business</span>
-                <strong>Manual work. Disconnected tools. Aging software.</strong>
-            </div>
-            <div class="signal-line"></div>
-            <div class="signal-card signal-card-accent">
-                <span class="signal-label">Beldsoft engineering</span>
-                <strong>Clear plan. Purpose-built solution. Measurable progress.</strong>
-            </div>
-        </div>
-    </div>
+<section class="hero-carousel-shell" aria-label="Beldsoft capabilities">
+    <MudCarousel TData="HeroSlide"
+                 Class="hero-carousel"
+                 AutoCycle="@_autoCycle"
+                 AutoCycleTime="@TimeSpan.FromSeconds(7)"
+                 ShowArrows="true"
+                 ShowBullets="true"
+                 EnableSwipeGesture="true"
+                 ArrowsColor="Color.Inherit"
+                 BulletsColor="Color.Inherit"
+                 NavigationButtonsClass="hero-carousel-arrow"
+                 BulletsClass="hero-carousel-bullets">
+        @foreach (var slide in HeroSlides)
+        {
+            <MudCarouselItem Transition="Transition.Fade">
+                <div class="hero" style="@HeroStyle(slide)">
+                    <div class="container hero-grid">
+                        <div class="hero-content">
+                            <span class="eyebrow">@slide.Eyebrow</span>
+                            @if (slide.IsPrimary)
+                            {
+                                <h1 class="hero-title">
+                                    <span class="hero-title-primary">@slide.Title</span>
+                                    <span class="hero-title-accent">@slide.AccentTitle</span>
+                                </h1>
+                            }
+                            else
+                            {
+                                <h2 class="hero-title">
+                                    <span class="hero-title-primary">@slide.Title</span>
+                                    <span class="hero-title-accent">@slide.AccentTitle</span>
+                                </h2>
+                            }
+                            <p class="lead">@slide.Description</p>
+                            <div class="button-row">
+                                <a class="button" href="@slide.PrimaryHref">@slide.PrimaryAction</a>
+                                <a class="text-link" href="@slide.SecondaryHref">@slide.SecondaryAction <span aria-hidden="true">→</span></a>
+                            </div>
+                            <ul class="trust-list" aria-label="What to expect">
+                                @foreach (var point in slide.TrustPoints)
+                                {
+                                    <li>@point</li>
+                                }
+                            </ul>
+                        </div>
+                        <div class="hero-image-space" aria-hidden="true"></div>
+                    </div>
+                </div>
+            </MudCarouselItem>
+        }
+    </MudCarousel>
+    <button class="hero-carousel-pause"
+            type="button"
+            @onclick="ToggleAutoCycle"
+            aria-label="@(_autoCycle ? "Pause hero carousel" : "Play hero carousel")">
+        <span aria-hidden="true">@(_autoCycle ? "Ⅱ" : "▶")</span>
+        <span>@(_autoCycle ? "Pause" : "Play")</span>
+    </button>
 </section>
 
 <section class="section">
@@ -95,24 +128,76 @@
 </section>
 
 @code {
-    private const string OrganizationSchema = """
-        {
-          "@context": "https://schema.org",
-          "@type": "ProfessionalService",
-          "name": "Beldsoft",
-          "url": "https://beldsoft.com/",
-          "email": "hello@beldsoft.com",
-          "description": "Software engineering and technology consulting for small and medium-sized businesses.",
-          "serviceType": [
-            "Custom software development",
-            "Software modernization",
-            "Software architecture",
-            "API and systems integration",
-            "Workflow automation",
-            "Cloud and DevOps consulting"
-          ]
-        }
-        """;
+    private const string OrganizationSchema =
+        "{\"\\u0040context\":\"https://schema.org\",\"\\u0040type\":\"ProfessionalService\"," +
+        "\"name\":\"Beldsoft\",\"url\":\"https://beldsoft.com/\",\"email\":\"support@beldsoft.com\"," +
+        "\"description\":\"Software engineering and technology consulting for small and medium-sized businesses.\"," +
+        "\"serviceType\":[\"Custom software development\",\"Software modernization\",\"Software architecture\"," +
+        "\"API and systems integration\",\"Workflow automation\",\"Cloud and DevOps consulting\"]}";
+
+    private static readonly HeroSlide[] HeroSlides =
+    [
+        // Heading names a concrete moment (the workaround) instead of a generic claim ("software that works") so it's recognizable to a prospect, not interchangeable with any dev shop.
+        new(
+            "Software engineering for growing businesses",
+            "Replace the workaround with",
+            "the system it deserves.",
+            "Beldsoft helps small and medium-sized organizations design, build, modernize, and integrate business software—without the overhead of a full internal engineering department.",
+            "/assets/images/main-slider/1.jpg",
+            "Request a consultation",
+            "/contact",
+            "Explore our services",
+            "/services",
+            ["Business-first discovery", "Senior technical guidance", "Maintainable delivery"],
+            true),
+        // Heading pre-empts the "just rewrite it" assumption and reframes modernization as a staged plan, matching the Software Modernization service positioning.
+        new(
+            "Modernization without unnecessary disruption",
+            "Your legacy app doesn't need a rewrite.",
+            "It needs a plan.",
+            "Reduce the cost and risk of aging applications through practical, staged improvements that protect business continuity and make future change easier.",
+            "/assets/images/main-slider/2.jpg",
+            "Discuss modernization",
+            "/contact?service=software-modernization",
+            "See our approach",
+            "/services/software-modernization",
+            ["Incremental roadmap", "Lower delivery risk", "Reliable operations"],
+            false),
+        // Heading names a specific, visible symptom (duplicate data entry) rather than an abstract outcome, matching the APIs & Systems Integration / Workflow Automation & Applied AI service positioning.
+        new(
+            "Connected operations and responsible automation",
+            "Stop re-entering the same data",
+            "into three systems.",
+            "Connect disconnected systems and apply automation or AI where it can reduce repetitive effort, improve visibility, and support better decisions.",
+            "/assets/images/main-slider/3.jpg",
+            "Discuss your workflow",
+            "/contact?service=workflow-automation-ai",
+            "Explore automation and AI",
+            "/services/workflow-automation-ai",
+            ["Secure integrations", "Human-centered controls", "Measurable outcomes"],
+            false)
+    ];
+
     private IEnumerable<ServiceDto> _services = [];
+    private bool _autoCycle = true;
+
+    private static string HeroStyle(HeroSlide slide) =>
+        $"--hero-image: url('{slide.Image}')";
+
+    private void ToggleAutoCycle() => _autoCycle = !_autoCycle;
+
     protected override async Task OnInitializedAsync() => _services = await ServiceSvc.GetServicesAsync();
+
+    private sealed record HeroSlide(
+        string Eyebrow,
+        string Title,
+        string AccentTitle,
+        string Description,
+        string Image,
+        string PrimaryAction,
+        string PrimaryHref,
+        string SecondaryAction,
+        string SecondaryHref,
+        string[] TrustPoints,
+        bool IsPrimary);
 }

@@ -4,21 +4,12 @@
 <MudSnackbarProvider />
 <MudDialogProvider />
 
+<a class="skip-link" href="#main-content">Skip to main content</a>
 <div class="page-wrapper">
-    <CustomCursor />
-    <Preloader />
-    <AboutSidebar />
-
-    <AppHeader Variant="HeaderVariant.Three" />
-
-    @Body
-
-    <AppFooter Variant="FooterVariant.Three" />
-
-    <SearchPopup />
-    <ColorSwitcher />
+    <AppHeader />
+    <main id="main-content">@Body</main>
+    <AppFooter />
 </div>
-<!-- End PageWrapper -->
 
 <div id="blazor-error-ui" data-nosnippet>
     An unhandled error has occurred.

@@ -7,7 +7,7 @@ public class CartService : ICartService
 {
     private readonly List<CartItemDto> _items = [];
 
-    public CartDto Cart => new() { Items = [.._items] };
+    public CartDto Cart => new() { Items = [.. _items] };
     public int TotalCount => _items.Sum(i => i.Quantity);
     public event Action? OnCartChanged;
 

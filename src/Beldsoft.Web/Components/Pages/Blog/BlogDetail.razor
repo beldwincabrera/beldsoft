@@ -23,7 +23,7 @@ else
                 <p class="lead">@_post.Excerpt</p>
             </div>
         </header>
-        <div class="article-layout container">
+        <div class="article-layout article-layout-stacked container">
             <aside class="article-aside">
                 <span class="eyebrow">In this insight</span>
                 <p>Business context, decision criteria, implementation risk, and a practical next step.</p>
@@ -32,7 +32,15 @@ else
             <div class="article-prose">@((MarkupString)_post.Content)</div>
         </div>
     </article>
-    <section class="cta-band"><div class="container cta-inner"><div><span class="eyebrow">Turn insight into action</span><h2>Define the right next move.</h2></div><a class="button button-light" href="/contact">Talk with Beldsoft</a></div></section>
+    <section class="cta-band">
+        <div class="container cta-inner">
+            <div>
+                <span class="eyebrow">Turn insight into action</span>
+                <h2>Define the right next move.</h2>
+            </div>
+            <a class="button button-light" href="/contact">Talk with Beldsoft</a>
+        </div>
+    </section>
 }
 
 @code {

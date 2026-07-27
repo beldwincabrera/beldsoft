@@ -10,16 +10,102 @@
 }
 else
 {
-    <section class="page-hero service-hero"><div class="container page-hero-inner"><div><a class="back-link" href="/services">← All services</a><h1>@_service.Title</h1></div><div><p class="lead">@_service.ShortDescription</p><a class="button" href="/contact?service=@_service.Slug">Discuss this service</a></div></div></section>
-    <section class="section">
-        <div class="container detail-grid">
-            <div class="prose service-overview"><span class="eyebrow">What this service does</span><h2>@OverviewHeading</h2><p>@_service.Description</p><p>@OutcomeCopy</p></div>
-            <aside class="feature-panel"><span class="panel-label">Typical capabilities</span><h2>What the work may include</h2><ul class="check-list">@foreach (var feature in _service.Features) { <li>@feature</li> }</ul><p class="small">The exact scope is defined after discovery and documented in the engagement proposal.</p></aside>
+    <section class="page-hero service-hero">
+        <div class="container page-hero-inner page-hero-stacked">
+            <div>
+                <a class="back-link" href="/services">← All services</a>
+                <span class="eyebrow">Consulting service</span>
+                <h1>@_service.Title</h1>
+            </div>
+            <div class="hero-support">
+                <p class="lead">@_service.ShortDescription</p>
+                <a class="button" href="/contact?service=@_service.Slug">Discuss this service</a>
+            </div>
         </div>
     </section>
-    <section class="section section-muted"><div class="container"><div class="section-heading"><span class="eyebrow">A practical engagement</span><h2>Clear decisions at every stage.</h2><p>The approach is adapted to the service, but the work remains transparent, reviewable, and tied to an agreed business outcome.</p></div><div class="delivery-steps"><article><span>01</span><div><h3>Clarify the current state</h3><p>Understand users, workflows, systems, dependencies, risks, and success criteria.</p></div></article><article><span>02</span><div><h3>Shape the right response</h3><p>Evaluate options, make tradeoffs explicit, and sequence work by value and risk.</p></div></article><article><span>03</span><div><h3>Deliver in visible increments</h3><p>Implement, validate, document, and prepare the solution for responsible operation.</p></div></article></div></div></section>
-    <section class="section"><div class="container split"><div><span class="eyebrow">Good fit indicators</span><h2>When to consider this service.</h2></div><div class="fit-list">@foreach (var item in FitIndicators) { <div><span aria-hidden="true">✓</span><p>@item</p></div> }</div></div></section>
-    <section class="cta-band"><div class="container cta-inner"><div><span class="eyebrow">Next step</span><h2>Tell us what is getting in the way.</h2></div><a class="button button-light" href="/contact?service=@_service.Slug">Request a consultation</a></div></section>
+    <section class="section">
+        <div class="container">
+            <div class="section-heading section-heading-wide">
+                <span class="eyebrow">What this service does</span>
+                <h2>@OverviewHeading</h2>
+            </div>
+            <div class="detail-grid">
+                <div class="prose service-overview">
+                    <p>@_service.Description</p>
+                    <p>@OutcomeCopy</p>
+                </div>
+                <aside class="feature-panel">
+                    <span class="panel-label">Typical capabilities</span>
+                    <h2>What the work may include</h2>
+                    <ul class="check-list">
+                        @foreach (var feature in _service.Features)
+                        {
+                            <li>@feature</li>
+                        }
+                    </ul>
+                    <p class="small">The exact scope is defined after discovery and documented in the engagement proposal.</p>
+                </aside>
+            </div>
+        </div>
+    </section>
+    <section class="section section-muted">
+        <div class="container">
+            <div class="section-heading section-heading-wide">
+                <span class="eyebrow">A practical engagement</span>
+                <h2>Clear decisions at every stage.</h2>
+                <p>The approach is adapted to the service, but the work remains transparent, reviewable, and tied to an agreed business outcome.</p>
+            </div>
+            <div class="delivery-steps">
+                <article>
+                    <span>01</span>
+                    <div>
+                        <h3>Clarify the current state</h3>
+                        <p>Understand users, workflows, systems, dependencies, risks, and success criteria.</p>
+                    </div>
+                </article>
+                <article>
+                    <span>02</span>
+                    <div>
+                        <h3>Shape the right response</h3>
+                        <p>Evaluate options, make tradeoffs explicit, and sequence work by value and risk.</p>
+                    </div>
+                </article>
+                <article>
+                    <span>03</span>
+                    <div>
+                        <h3>Deliver in visible increments</h3>
+                        <p>Implement, validate, document, and prepare the solution for responsible operation.</p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="container section-flow">
+            <div class="section-heading section-heading-wide">
+                <span class="eyebrow">Good fit indicators</span>
+                <h2>When to consider this service.</h2>
+            </div>
+            <div class="fit-list content-wide">
+                @foreach (var item in FitIndicators)
+                {
+                    <div>
+                        <span aria-hidden="true">✓</span>
+                        <p>@item</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+    <section class="cta-band">
+        <div class="container cta-inner">
+            <div>
+                <span class="eyebrow">Next step</span>
+                <h2>Tell us what is getting in the way.</h2>
+            </div>
+            <a class="button button-light" href="/contact?service=@_service.Slug">Request a consultation</a>
+        </div>
+    </section>
 }
 
 @code {

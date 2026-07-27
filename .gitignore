@@ -65,5 +65,5 @@ ithub/
 *.tmp
 *.temp
 /tmp/
-# Server-side consultation submissions
+# Server-side Lead submissions
 src/Beldsoft.Web/App_Data/

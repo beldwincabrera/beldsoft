@@ -1,0 +1,76 @@
+@using Beldsoft.Web.Models.Credibility
+
+@if (PublishedClients.Length > 0 || PublishedTestimonials.Length > 0)
+{
+    <section class="section section-muted" aria-labelledby="@HeadingId">
+        <div class="container">
+            <div class="section-heading section-heading-wide">
+                <span class="eyebrow">@Eyebrow</span>
+                <h2 id="@HeadingId">@Heading</h2>
+            </div>
+
+            @if (PublishedClients.Length > 0)
+            {
+                <div class="social-proof-logo-grid" aria-label="Client organizations">
+                    @foreach (var client in PublishedClients)
+                    {
+                        @if (string.IsNullOrWhiteSpace(client.WebsiteUrl))
+                        {
+                            <div class="social-proof-logo">
+                                <img src="@client.LogoPath"
+                                     alt="@client.LogoAlternativeText"
+                                     loading="lazy" />
+                            </div>
+                        }
+                        else
+                        {
+                            <a class="social-proof-logo"
+                               href="@client.WebsiteUrl"
+                               aria-label="@($"Visit {client.Name}")">
+                                <img src="@client.LogoPath"
+                                     alt="@client.LogoAlternativeText"
+                                     loading="lazy" />
+                            </a>
+                        }
+                    }
+                </div>
+            }
+
+            @if (PublishedTestimonials.Length > 0)
+            {
+                <div class="social-proof-testimonial-grid">
+                    @foreach (var testimonial in PublishedTestimonials)
+                    {
+                        <figure class="social-proof-testimonial">
+                            <blockquote>
+                                <p>@testimonial.Quote</p>
+                            </blockquote>
+                            <figcaption>
+                                <strong>@testimonial.AttributionName</strong>
+                                <span>@testimonial.AttributionTitle</span>
+                                @if (!string.IsNullOrWhiteSpace(testimonial.Organization))
+                                {
+                                    <span>@testimonial.Organization</span>
+                                }
+                            </figcaption>
+                        </figure>
+                    }
+                </div>
+            }
+        </div>
+    </section>
+}
+
+@code {
+    [Parameter] public string Eyebrow { get; set; } = "Client experience";
+    [Parameter] public string Heading { get; set; } = "Trusted by teams doing important work.";
+    [Parameter] public string HeadingId { get; set; } = "client-experience-heading";
+    [Parameter] public IReadOnlyList<ClientLogoItem> Clients { get; set; } = [];
+    [Parameter] public IReadOnlyList<ClientTestimonial> Testimonials { get; set; } = [];
+
+    private ClientLogoItem[] PublishedClients =>
+        Clients.Where(client => client.IsReadyForPublication).ToArray();
+
+    private ClientTestimonial[] PublishedTestimonials =>
+        Testimonials.Where(testimonial => testimonial.IsReadyForPublication).ToArray();
+}

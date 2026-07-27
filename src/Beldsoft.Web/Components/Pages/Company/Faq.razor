@@ -8,19 +8,23 @@
 <section class="page-hero"><div class="container page-hero-inner"><div><span class="eyebrow">Frequently asked questions</span><h1>What to know before starting an engagement.</h1></div><p class="lead">Straight answers about fit, process, scope, and technical delivery.</p></div></section>
 <section class="section">
     <div class="container faq-wrap">
-        <MudExpansionPanels MultiExpansion="true">
-            @foreach (var faq in _faqs)
+        <div class="mud-expansion-panels">
+            @for (var index = 0; index < _faqs.Count; index++)
             {
-                <MudExpansionPanel Text="@faq.Question">
-                    <p>@faq.Answer</p>
-                </MudExpansionPanel>
+                var faq = _faqs[index];
+                <AccessibleFaqPanel @key="faq"
+                                    BaseId="@($"faq-{index + 1}")"
+                                    Question="@faq.Question"
+                                    Answer="@faq.Answer" />
             }
-        </MudExpansionPanels>
+        </div>
     </div>
 </section>
 <section class="cta-band"><div class="container cta-inner"><div><span class="eyebrow">Still evaluating?</span><h2>Ask the question that matters to your business.</h2></div><a class="button button-light" href="/contact">Contact Beldsoft</a></div></section>
 
 @code {
-    private IEnumerable<FaqItemDto> _faqs = [];
-    protected override async Task OnInitializedAsync() => _faqs = await FaqSvc.GetFaqItemsAsync();
+    private IReadOnlyList<FaqItemDto> _faqs = [];
+
+    protected override async Task OnInitializedAsync() =>
+        _faqs = (await FaqSvc.GetFaqItemsAsync()).ToList();
 }

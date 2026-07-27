@@ -1,0 +1,46 @@
+@using Beldsoft.Web.Models.Credibility
+
+@if (PublishedMembers.Length > 0)
+{
+    <section class="section" aria-labelledby="@HeadingId">
+        <div class="container">
+            <div class="section-heading section-heading-wide">
+                <span class="eyebrow">@Eyebrow</span>
+                <h2 id="@HeadingId">@Heading</h2>
+                @if (!string.IsNullOrWhiteSpace(Introduction))
+                {
+                    <p>@Introduction</p>
+                }
+            </div>
+
+            <div class="leadership-grid">
+                @foreach (var member in PublishedMembers)
+                {
+                    <article class="leadership-profile">
+                        <img src="@member.PhotoPath"
+                             alt="@member.PhotoAlternativeText"
+                             width="480"
+                             height="600"
+                             loading="lazy" />
+                        <div class="leadership-profile-copy">
+                            <h3>@member.Name</h3>
+                            <p class="leadership-title">@member.Title</p>
+                            <p>@member.Biography</p>
+                        </div>
+                    </article>
+                }
+            </div>
+        </div>
+    </section>
+}
+
+@code {
+    [Parameter] public string Eyebrow { get; set; } = "Leadership";
+    [Parameter] public string Heading { get; set; } = "Experienced guidance, accountable delivery.";
+    [Parameter] public string? Introduction { get; set; }
+    [Parameter] public string HeadingId { get; set; } = "leadership-heading";
+    [Parameter] public IReadOnlyList<LeadershipProfile> Members { get; set; } = [];
+
+    private LeadershipProfile[] PublishedMembers =>
+        Members.Where(member => member.IsReadyForPublication).ToArray();
+}

@@ -1,0 +1,53 @@
+<div class="@PanelClass">
+    <h2 class="faq-panel-heading">
+        <button id="@HeaderId"
+                type="button"
+                class="mud-expand-panel-header mud-expand-panel-header-gutters faq-panel-button"
+                role="button"
+                aria-expanded="@(_expanded ? "true" : "false")"
+                aria-controls="@BodyId"
+                @onclick="Toggle">
+            <span class="mud-expand-panel-text">@Question</span>
+            <MudIcon Icon="@Icons.Material.Filled.ExpandMore"
+                     Class="@IconClass"
+                     aria-hidden="true" />
+        </button>
+    </h2>
+
+    <MudCollapse Expanded="@_expanded">
+        <div id="@BodyId"
+             class="mud-expand-panel-content mud-expand-panel-gutters"
+             role="region"
+             aria-labelledby="@HeaderId"
+             aria-hidden="@(_expanded ? "false" : "true")">
+            <p>@Answer</p>
+        </div>
+    </MudCollapse>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public required string BaseId { get; set; }
+
+    [Parameter, EditorRequired]
+    public required string Question { get; set; }
+
+    [Parameter, EditorRequired]
+    public required string Answer { get; set; }
+
+    private bool _expanded;
+
+    private string HeaderId => $"{BaseId}-header";
+
+    private string BodyId => $"{BaseId}-body";
+
+    private string PanelClass => _expanded
+        ? "mud-expand-panel mud-expand-panel-border mud-elevation-1 mud-panel-expanded"
+        : "mud-expand-panel mud-expand-panel-border mud-elevation-1";
+
+    private string IconClass => _expanded
+        ? "mud-expand-panel-icon mud-transform"
+        : "mud-expand-panel-icon";
+
+    private void Toggle() => _expanded = !_expanded;
+}

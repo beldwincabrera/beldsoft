@@ -6,7 +6,7 @@
          Description="Practical guidance for custom software, modernization, systems integration, workflow automation, applied AI, cloud, and technology decisions." Path="/blog" />
 
 <section class="page-hero">
-    <div class="container page-hero-inner">
+    <div class="container page-hero-inner page-hero-stacked">
         <div>
             <span class="eyebrow">Beldsoft insights</span>
             <h1>Practical thinking for better software decisions.</h1>
@@ -17,11 +17,9 @@
 
 <section class="section">
     <div class="container">
-        <div class="insights-intro">
-            <div>
-                <span class="eyebrow">Latest perspectives</span>
-                <h2>Make the decision before selecting the technology.</h2>
-            </div>
+        <div class="section-heading section-heading-wide">
+            <span class="eyebrow">Latest perspectives</span>
+            <h2>Make the decision before selecting the technology.</h2>
             <p>These articles are written to help growing organizations evaluate tradeoffs, reduce delivery risk, and invest in technology with a clearer business case.</p>
         </div>
         <div class="insight-grid">
@@ -41,7 +39,16 @@
     </div>
 </section>
 
-<section class="cta-band"><div class="container cta-inner"><div><span class="eyebrow">Have a specific challenge?</span><h2>Apply the thinking to your business.</h2><p>Start with a focused conversation about the outcome, constraints, and next decision.</p></div><a class="button button-light" href="/contact">Request a consultation</a></div></section>
+<section class="cta-band">
+    <div class="container cta-inner">
+        <div>
+            <span class="eyebrow">Have a specific challenge?</span>
+            <h2>Apply the thinking to your business.</h2>
+            <p>Start with a focused conversation about the outcome, constraints, and next decision.</p>
+        </div>
+        <a class="button button-light" href="/contact">Request a consultation</a>
+    </div>
+</section>
 
 @code {
     private IEnumerable<BlogPostSummaryDto> _posts = [];

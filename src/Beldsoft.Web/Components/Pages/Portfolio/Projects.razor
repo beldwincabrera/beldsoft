@@ -1,14 +1,89 @@
 @page "/projects"
 @layout Layout.MainLayout
+@using Beldsoft.Web.Components.Shared.Credibility
+@using Beldsoft.Web.Models.Credibility
 
 <SeoHead Title="How Beldsoft Helps | Software Consulting Use Cases"
          Description="See the business challenges Beldsoft addresses through custom software, modernization, integrations, automation, architecture, cloud, and DevOps." Path="/projects" />
 <section class="page-hero"><div class="container page-hero-inner"><div><span class="eyebrow">How we help</span><h1>Where focused engineering creates leverage.</h1></div><p class="lead">Representative business situations that benefit from custom software, integration, modernization, technical leadership, or responsible automation.</p></div></section>
 <section class="section"><div class="container case-list">
-    <article class="case-row"><span>01</span><div><p class="tag">Operations</p><h2>Replace a fragile spreadsheet workflow</h2><p>Design a secure business application that centralizes data, guides users through the process, records decisions, and makes status visible.</p></div><strong>Custom software · Automation · Reporting</strong></article>
-    <article class="case-row"><span>02</span><div><p class="tag">Integration</p><h2>Connect tools that create duplicate work</h2><p>Build reliable APIs and workflows that move information between systems with validation, auditability, and clear failure handling.</p></div><strong>APIs · Identity · Messaging</strong></article>
-    <article class="case-row"><span>03</span><div><p class="tag">Modernization</p><h2>Reduce risk in a business-critical legacy application</h2><p>Assess constraints, isolate high-risk areas, improve observability and testing, and modernize in controlled stages.</p></div><strong>Architecture · Cloud · Reliability</strong></article>
-    <article class="case-row"><span>04</span><div><p class="tag">Technical leadership</p><h2>Turn a product idea into an executable plan</h2><p>Define users, scope, architecture, delivery stages, quality expectations, and technical decisions before committing to a build.</p></div><strong>Discovery · Roadmap · Architecture</strong></article>
-    <article class="case-row"><span>05</span><div><p class="tag">Applied AI</p><h2>Automate a document-heavy internal process</h2><p>Evaluate whether AI adds value, prototype the workflow, add human review and guardrails, and integrate it with the existing operation.</p></div><strong>AI · Workflow · Governance</strong></article>
+    @foreach (var scenario in ProjectScenarios)
+    {
+        <article class="case-row">
+            <span>@scenario.Sequence</span>
+            <div>
+                <p class="tag">@scenario.Category</p>
+                <h2>@scenario.Title</h2>
+                <p>@scenario.Description</p>
+                @if (!string.IsNullOrWhiteSpace(scenario.QuantifiedOutcome))
+                {
+                    <p class="case-outcome">
+                        <span>Verified outcome</span>
+                        @scenario.QuantifiedOutcome
+                    </p>
+                }
+            </div>
+            <strong>@scenario.Capabilities</strong>
+        </article>
+    }
 </div></section>
+
+<SocialProofSection Clients="@ClientLogos"
+                    Testimonials="@ClientTestimonials" />
+
 <section class="cta-band"><div class="container cta-inner"><div><span class="eyebrow">Your situation will be specific</span><h2>Let’s define the right outcome and next step.</h2></div><a class="button button-light" href="/contact">Discuss your challenge</a></div></section>
+
+@code {
+    private static readonly IReadOnlyList<ProjectScenario> ProjectScenarios =
+    [
+        new("01", "Operations", "Replace a fragile spreadsheet workflow",
+            "Design a secure business application that centralizes data, guides users through the process, records decisions, and makes status visible.",
+            "Custom software · Automation · Reporting"),
+        new("02", "Integration", "Connect tools that create duplicate work",
+            "Build reliable APIs and workflows that move information between systems with validation, auditability, and clear failure handling.",
+            "APIs · Identity · Messaging"),
+        new("03", "Modernization", "Reduce risk in a business-critical legacy application",
+            "Assess constraints, isolate high-risk areas, improve observability and testing, and modernize in controlled stages.",
+            "Architecture · Cloud · Reliability"),
+        new("04", "Technical leadership", "Turn a product idea into an executable plan",
+            "Define users, scope, architecture, delivery stages, quality expectations, and technical decisions before committing to a build.",
+            "Discovery · Roadmap · Architecture"),
+        new("05", "Applied AI", "Automate a document-heavy internal process",
+            "Evaluate whether AI adds value, prototype the workflow, add human review and guardrails, and integrate it with the existing operation.",
+            "AI · Workflow · Governance")
+    ];
+
+    // TODO(BUSINESS): Populate QuantifiedOutcome only with a documented,
+    // client-approved result. A null or blank value intentionally renders no stat line.
+    private sealed record ProjectScenario(
+        string Sequence,
+        string Category,
+        string Title,
+        string Description,
+        string Capabilities,
+        string? QuantifiedOutcome = null);
+
+    private static readonly IReadOnlyList<ClientLogoItem> ClientLogos =
+    [
+        // TODO(BUSINESS): Replace with an approved client name, logo asset, accessible
+        // text, and optional URL. Keep approval false until the client permits publication.
+        new(
+            Name: "TODO: approved client name",
+            LogoPath: "TODO: approved client logo path",
+            LogoAlternativeText: "TODO: accessible client logo text",
+            WebsiteUrl: null,
+            IsApprovedForPublication: false)
+    ];
+
+    private static readonly IReadOnlyList<ClientTestimonial> ClientTestimonials =
+    [
+        // TODO(BUSINESS): Replace with a verbatim, client-approved quote and attribution.
+        // Keep approval false until written permission to publish has been confirmed.
+        new(
+            Quote: "TODO: approved client testimonial",
+            AttributionName: "TODO: approved client name",
+            AttributionTitle: "TODO: approved client title",
+            Organization: "TODO: approved organization name",
+            IsApprovedForPublication: false)
+    ];
+}

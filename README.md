@@ -277,8 +277,8 @@ classDiagram
         +OnCartChanged event
     }
 
-    class IContactService {
-        +SubmitMessageAsync(form) bool
+    class ILeadService {
+        +SubmitLeadAsync(lead) bool
     }
 
     class IFaqService {
@@ -326,7 +326,7 @@ classDiagram
 | `BlogCommentDto` | — | — |
 | `CartDto` | — | `Subtotal`, `Total`, `TotalCount` (all computed) |
 | `CartItemDto` | — | `LineTotal = UnitPrice * Quantity` |
-| `ContactFormDto` | — | Data annotations: `[Required]`, `[EmailAddress]` |
+| `LeadDto` | — | Contact, qualification, consent, honeypot, and conditional phone validation |
 | `FaqItemDto` | — | — |
 | `PricingPlanDto` | — | — |
 | `ProductDto` | — | `DisplayPrice = SalePrice ?? Price` |
@@ -523,7 +523,7 @@ graph LR
     end
 ```
 
-Read-only data services (blog, team, projects, etc.) are singletons because they serve the same static seed data to all users. `CartService` is scoped so each user has their own independent cart. `ContactService` is scoped to allow per-session contact form state isolation.
+Read-only data services (blog, team, projects, etc.) are singletons because they serve the same static seed data to all users. `CartService` is scoped so each user has an independent cart. `LeadService` is a thread-safe singleton that validates, rate-limits, emails, and stores website Leads.
 
 ---
 
@@ -597,7 +597,7 @@ Beldsoft.sln
     │   └── ValueObjects/                 # SocialLinks, SkillItem, ExperienceItem
     │
     ├── Beldsoft.Application/             # Use-case layer
-    │   ├── Interfaces/                   # IBlogService, ICartService, IContactService,
+    │   ├── Interfaces/                   # IBlogService, ICartService, ILeadService,
     │   │                                 # IFaqService, IPricingService, IProductService,
     │   │                                 # IProjectService, IServiceService,
     │   │                                 # ITeamService, ITestimonialService
